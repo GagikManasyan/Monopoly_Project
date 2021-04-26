@@ -8,10 +8,10 @@ public class Game
     private Player player3;
     private Player player4;
     private String [] [] game_board = new String[11][11];
-    private String [] top_line = new String[]{"|Parking|", "|Teryan 1|", "|Chance|", "|Teryan 2|", "|Teryan 3|", "|Train 3|", "|Pushkin 1|", "|Pushkin 2|", "|Water|","|Pushkin 3|", "|Go To Jail|"};
-    private String [] left_line = new String[]{"", "|Amiryan 3|", "|Chest|", "|Amiryan 2|", "|Amiryan 1|", "|Train 2|", "|Saryan 3|", "|Saryan 2|", "|Electric|", "|Saryan 1|"};
-    private String [] right_line = new String[]{"", "|Aram 1|", "|Aram 2|", "|Chest|", "|Aram 3|", "|Train 4|", "|Chance|", "|North Avenue 1|", "|Luxury|", "|North Avenue 2|"};
-    private String [] bot_line = new String []{"|Jail|", "|Mashtoc 3|", "|Mashtoc 2|", "|Chance|", "|Mashtoc 1|", "|Train 1|", "|Tax|", "|Tumayan 2|", "|Chest|", "|Tumanyan 1|", "|Start|"};
+    private String [] top_line = new String[]{"|Parking|", "|Kentucky Avenue|", "|Chance|", "|Indiana Avenue|", "|Illinois Avenue|", "|Train 3|", "|Atlantic Avenue|", "|Ventnor Avenue|", "|Water|","|Marvin Gardens|", "|Go To Jail|"};
+    private String [] left_line = new String[]{"", "|New York Avenue|", "|Chest|", "|Tennessee Avenue|", "|St James Place|", "|Train 2|", "|Virginia Avenue|", "|States Avenue|", "|Electric|", "|St Charles Place|"};
+    private String [] right_line = new String[]{"", "|Pacific Avenue|", "|North Carolina Avenue|", "|Chest|", "|Pennsylvania Avenue|", "|Train 4|", "|Chance|", "|Park Place|", "|Luxury|", "|Boardwalk|"};
+    private String [] bot_line = new String []{"|Jail|", "|Connecticut Avenue|", "|Vermont Avenue|", "|Chance|", "|Oriental Avenue|", "|Train 1|", "|Tax|", "|Baltic Avenue|", "|Chest|", "|Mediterranean Avenue|", "|Go|"};
     protected void Print_board ()
     {
         for (int i = 0; i < game_board.length; i++)
