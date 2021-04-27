@@ -41,42 +41,81 @@ public class Game
         int turn = takeTurns();
         if(turn == 1)
         {
+            int c = game_board.length - this.player_1_pos;
+            System.out.println("current position - " + this.player_1_pos);
+            System.out.println("dice roll - " + dice_roll);
             this.player_1_pos += dice_roll;
+            if(this.player_1_pos > 39)
+            {
+                this.player_1_pos = 0;
+                this.player_1_pos += dice_roll - c;
+
+            }
         }
-        if(turn == 2)
+        /*if(turn == 2)
         {
+            int c = game_board.length - this.player_2_pos;
+            System.out.println("current position - " + this.player_2_pos);
+            System.out.println("dice roll - " + dice_roll);
             this.player_2_pos += dice_roll;
+            if(this.player_2_pos > 39)
+            {
+                this.player_2_pos = 0;
+                this.player_2_pos += dice_roll - c;
+
+            }
         }
         if(turn == 3)
         {
+            int c = game_board.length - this.player_3_pos;
+            System.out.println("current position - " + this.player_3_pos);
+            System.out.println("dice roll - " + dice_roll);
             this.player_3_pos += dice_roll;
+            if(this.player_3_pos > 39)
+            {
+                this.player_3_pos = 0;
+                this.player_3_pos += dice_roll - c;
+
+            }
         }
         if(turn == 4)
         {
+            int c = game_board.length - this.player_4_pos;
+            System.out.println("current position - " + this.player_4_pos);
+            System.out.println("dice roll - " + dice_roll);
             this.player_4_pos += dice_roll;
-        }
+            if(this.player_4_pos > 39)
+            {
+                this.player_4_pos = 0;
+                this.player_4_pos += dice_roll - c;
+
+            }
+        }*/
+
+
     }
     protected void Feedback()
     {
+        int turn = takeTurns();
         if(turn == 1)
         {
+            System.out.println(turn);
             System.out.println("player 1 you are on" + game_board[this.player_1_pos]);
         }
-        if(turn == 2)
+        /*if(turn == 2)
         {
+            System.out.println(turn);
             System.out.println("player 2 you are on" + game_board[this.player_2_pos]);
         }
         if(turn == 3)
         {
+            System.out.println(turn);
             System.out.println("player 3 you are on" + game_board[this.player_3_pos]);
         }
         if(turn == 4)
         {
+            System.out.println(turn);
             System.out.println("player 4 you are on" + game_board[this.player_4_pos]);
-        }
-
-
+        }*/
     }
-
-
 }
