@@ -13,6 +13,9 @@ public class Main {
             game.Move();
 
 
+
+
+
         }
         while(c <= 100);
 
