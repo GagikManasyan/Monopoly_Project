@@ -13,6 +13,7 @@ public class Game
     private static int player_2_pos = 0;
     private static int player_3_pos = 0;
     private static int player_4_pos = 0;
+    private Integer [] player_list = {player_1_pos , player_2_pos , player_3_pos , player_4_pos};
     protected void Print_board ()
     {
         for (int i = 0; i < game_board.length; i++)
@@ -31,7 +32,7 @@ public class Game
         turn = turn + 1;
         if(turn > 4)
         {
-            turn = 0;
+            turn = 1;
         }
         return turn;
     }
@@ -39,19 +40,19 @@ public class Game
     {
         int dice_roll = diceRoll();
         int turn = takeTurns();
-        if(turn == 1)
-        {
-            int c = game_board.length - this.player_1_pos;
-            System.out.println("current position - " + this.player_1_pos);
+        /*if(turn == 1)
+        {*/
+            int c = game_board.length - player_list[turn-1];
+            System.out.println("current position - " + player_list[turn-1]);
             System.out.println("dice roll - " + dice_roll);
-            this.player_1_pos += dice_roll;
-            if(this.player_1_pos > 39)
+            player_list[turn-1] += dice_roll;
+            if(player_list[turn-1] > 39)
             {
-                this.player_1_pos = 0;
-                this.player_1_pos += dice_roll - c;
+                player_list[turn-1] = 0;
+                player_list[turn-1] += dice_roll - c;
 
             }
-        }
+        /*}*/
         /*if(turn == 2)
         {
             int c = game_board.length - this.player_2_pos;
