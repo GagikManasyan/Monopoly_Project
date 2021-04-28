@@ -9,7 +9,12 @@ public class Game
     private Player player4;
     private static int turn = 0;
     Square [] game_board = new Square[40];
-    Game (String player1, String player2, String player3, String player4){
+    Game (String player1, String player2, String player3, String player4)
+    {
+        this.player1 = new Player(player1);
+        this.player2 = new Player(player2);
+        this.player3 = new Player(player3);
+        this.player4 = new Player(player4);
         game_board[0] = new Square("Go");
         game_board[1] = new Street("Mediterranean Avenue");
         game_board[2] = new Community_chest();
@@ -50,11 +55,7 @@ public class Game
         game_board[37] = new Street("Park Place");
         game_board[38] = new Street("Luxury");
         game_board[39] = new Street("Boardwalk");
-
-
-
     }
-
     private static Integer [] player_list = {0 , 0 , 0 , 0};
     protected void Print_board ()
     {
@@ -87,6 +88,22 @@ public class Game
         System.out.println();
         if(player_list[turn-1] > 39)
         {
+            if(turn == 1)
+            {
+                player1.giveMoney(200);
+            }
+            if(turn == 2)
+            {
+                player2.giveMoney(200);
+            }
+            if(turn == 3)
+            {
+                player3.giveMoney(200);
+            }
+            if(turn == 4)
+            {
+                player4.giveMoney(200);
+            }
             player_list[turn-1] = 0;
             player_list[turn-1] += dice_roll - c;
 
@@ -95,6 +112,21 @@ public class Game
     protected void Feedback()
     {
         takeTurns();
-        System.out.println("Player " + turn + " you are on - " + game_board[player_list[turn-1]]);
+        if(turn == 1)
+        {
+            System.out.println(player1.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+        }
+        if(turn == 2)
+        {
+            System.out.println(player2.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+        }
+        if(turn == 3)
+        {
+            System.out.println(player3.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+        }
+        if(turn == 4)
+        {
+            System.out.println(player4.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+        }
     }
 }
