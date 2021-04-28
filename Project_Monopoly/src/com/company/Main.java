@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args)
     {
         int c = 0;
-        Game game = new Game();
+        Game game = new Game("aaa","bbb","ccc","ddd");
         do
         {
             c = c+1;

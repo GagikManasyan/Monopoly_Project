@@ -8,93 +8,53 @@ public class Game
     private Player player3;
     private Player player4;
     private static int turn = 0;
-    Square [] game_board1;
+    Square [] game_board = new Square[40];
     Game (String player1, String player2, String player3, String player4){
-        game_board1[0] = new Square("Go");
-        game_board1[1] = new Street("Mediterranean Avenue");
-        game_board1[2] = new Community_chest();
-        game_board1[3] = new Street("Baltic Avenue");
-        game_board1[4] = new Square("Tax");
-        game_board1[5] = new Train("Train 1");
-        game_board1[6] = new Street("Oriental Avenue");
-        game_board1[7] = new Community_chest();
-        game_board1[8] = new Street("Vermont Avenue");
-        game_board1[9] = new Street("Connecticut Avenue");
-        /*game_board1[10] = new Jail("Jail");*/
-        game_board1[11] =
-        game_board1[12]
-        game_board1[13]
-        game_board1[14]
-        game_board1[15]
-        game_board1[16]
-        game_board1[17]
-        game_board1[18]
-        game_board1[19]
-        game_board1[20]
-        game_board1[21]
-        game_board1[22]
-        game_board1[23]
-        game_board1[24]
-        game_board1[25]
-        game_board1[26]
-        game_board1[27]
-        game_board1[28]
-        game_board1[29]
-        game_board1[30]
-        game_board1[31]
-        game_board1[32]
-        game_board1[33]
-        game_board1[34]
-        game_board1[35]
-        game_board1[36]
-        game_board1[37]
-        game_board1[38]
-        game_board1[39]
+        game_board[0] = new Square("Go");
+        game_board[1] = new Street("Mediterranean Avenue");
+        game_board[2] = new Community_chest();
+        game_board[3] = new Street("Baltic Avenue");
+        game_board[4] = new Square("Tax");
+        game_board[5] = new Train("Train 1");
+        game_board[6] = new Street("Oriental Avenue");
+        game_board[7] = new Chance();
+        game_board[8] = new Street("Vermont Avenue");
+        game_board[9] = new Street("Connecticut Avenue");
+        game_board[10] = new Jail("Jail");
+        game_board[11] = new Street("St Charles Place");
+        game_board[12] = new Electricity("Electric");
+        game_board[13] = new Street("States Avenue");
+        game_board[14] = new Street("Virginia Avenue");
+        game_board[15] = new Train("Train 2");
+        game_board[16] = new Street("St James Place");
+        game_board[17] = new Street("Tennessee Avenue");
+        game_board[18] = new Community_chest();
+        game_board[19] = new Street("New York Avenue");
+        game_board[20] = new Square("Parking");
+        game_board[21] = new Street("Kentucky Avenue");
+        game_board[22] = new Chance();
+        game_board[23] = new Street("Indiana Avenue");
+        game_board[24] = new Street("Illinois Avenue");
+        game_board[25] = new Train("Train 3");
+        game_board[26] = new Street("Atlantic Avenue");
+        game_board[27] = new Street("Ventnor Avenue");
+        game_board[28] = new Water();
+        game_board[29] = new Street("Marvin Gardens");
+        game_board[30] = new Square("Go to jail");
+        game_board[31] = new Street("Pacific Avenue");
+        game_board[32] = new Street("North Carolina Avenue");
+        game_board[33] = new Community_chest();
+        game_board[34] = new Street("Pennsylvania Avenue");
+        game_board[35] = new Train("Train 4");
+        game_board[36] = new Chance();
+        game_board[37] = new Street("Park Place");
+        game_board[38] = new Street("Luxury");
+        game_board[39] = new Street("Boardwalk");
 
 
 
     }
-    private String [] game_board =
-            {"|Go|",
-            "|Mediterranean Avenue|",
-            "|Chest|" ,
-            "|Baltic Avenue|",
-            "|Tax|",
-            "|Train 1|",
-            "|Oriental Avenue|",
-            "|Chance|",
-            "|Vermont Avenue|",
-            "|Connecticut Avenue|",
-            "|Jail|",
-            "|St Charles Place|",
-            "|Electric|",
-            "|States Avenue|",
-            "|Virginia Avenue|",
-            "|Train 2|",
-            "|St James Place|",
-            "|Tennessee Avenue|",
-            "|Chest|",
-            "|New York Avenue|",
-            "|Parking|",
-            "|Kentucky Avenue|",
-            "|Chance|",
-            "|Indiana Avenue|",
-            "|Illinois Avenue|",
-            "|Train 3|",
-            "|Atlantic Avenue|",
-            "|Ventnor Avenue|",
-            "|Water|",
-            "|Marvin Gardens|",
-            "|Go To Jail|",
-            "|Pacific Avenue|",
-            "|North Carolina Avenue|",
-            "|Chest|",
-            "|Pennsylvania Avenue|",
-            "|Train 4|",
-            "|Chance|",
-            "|Park Place|",
-            "|Luxury|",
-            "|Boardwalk|"};
+
     private static Integer [] player_list = {0 , 0 , 0 , 0};
     protected void Print_board ()
     {
