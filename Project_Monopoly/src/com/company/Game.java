@@ -35,9 +35,10 @@ public class Game
     protected void Move()
     {
         int dice_roll = diceRoll();
+        int turn = takeTurns();
+        System.out.println("Player " + turn + " - " + "Current position - " +  + player_list[turn-1]);
         System.out.println("Dice - " + dice_roll);
         System.out.println();
-        int turn = takeTurns();
         int c = game_board.length - player_list[turn-1];
         player_list[turn-1] += dice_roll;
         if(player_list[turn-1] > 39)
@@ -49,39 +50,6 @@ public class Game
     }
     protected void Feedback()
     {
-        if(turn == 0)
-        {
-            System.out.println("player 1 you are on" + game_board[player_list[0]]);
-            System.out.println("current position - " + player_list[0]);
-            System.out.println("player 2 you are on" + game_board[player_list[1]]);
-            System.out.println("current position - " + player_list[1]);
-            System.out.println("player 3 you are on" + game_board[player_list[2]]);
-            System.out.println("current position - " + player_list[2]);
-            System.out.println("player 4 you are on" + game_board[player_list[3]]);
-            System.out.println("current position - " + player_list[3]);
-            System.out.println();
-            System.out.println("Player 1 starts");
 
-        }
-        if(turn == 1)
-        {
-            System.out.println("player 1 you are on" + game_board[player_list[0]]);
-            System.out.println("current position - " + player_list[0]);
-        }
-        if(turn == 2)
-        {
-            System.out.println("player 2 you are on" + game_board[player_list[1]]);
-            System.out.println("current position - " + player_list[1]);
-        }
-        if(turn == 3)
-        {
-            System.out.println("player 3 you are on" + game_board[player_list[2]]);
-            System.out.println("current position - " + player_list[2]);
-        }
-        if(turn == 4)
-        {
-            System.out.println("player 4 you are on" + game_board[player_list[3]]);
-            System.out.println("current position - " + player_list[3]);
-        }
     }
 }
