@@ -17,12 +17,12 @@ public class Game
         this.player4 = new Player(player4);
         game_board[0] = new Square("Go");
         game_board[1] = new Street("Mediterranean Avenue");
-        game_board[2] = new Community_chest();
+        game_board[2] = new Community_chest("Chest");
         game_board[3] = new Street("Baltic Avenue");
         game_board[4] = new Square("Tax");
         game_board[5] = new Train("Train 1");
         game_board[6] = new Street("Oriental Avenue");
-        game_board[7] = new Chance();
+        game_board[7] = new Chance("Chance");
         game_board[8] = new Street("Vermont Avenue");
         game_board[9] = new Street("Connecticut Avenue");
         game_board[10] = new Jail("Jail");
@@ -33,25 +33,25 @@ public class Game
         game_board[15] = new Train("Train 2");
         game_board[16] = new Street("St James Place");
         game_board[17] = new Street("Tennessee Avenue");
-        game_board[18] = new Community_chest();
+        game_board[18] = new Community_chest("Chest");
         game_board[19] = new Street("New York Avenue");
         game_board[20] = new Square("Parking");
         game_board[21] = new Street("Kentucky Avenue");
-        game_board[22] = new Chance();
+        game_board[22] = new Chance("Chance");
         game_board[23] = new Street("Indiana Avenue");
         game_board[24] = new Street("Illinois Avenue");
         game_board[25] = new Train("Train 3");
         game_board[26] = new Street("Atlantic Avenue");
         game_board[27] = new Street("Ventnor Avenue");
-        game_board[28] = new Water();
+        game_board[28] = new Water("Water");
         game_board[29] = new Street("Marvin Gardens");
         game_board[30] = new Square("Go to jail");
         game_board[31] = new Street("Pacific Avenue");
         game_board[32] = new Street("North Carolina Avenue");
-        game_board[33] = new Community_chest();
+        game_board[33] = new Community_chest("Chest");
         game_board[34] = new Street("Pennsylvania Avenue");
         game_board[35] = new Train("Train 4");
-        game_board[36] = new Chance();
+        game_board[36] = new Chance("Chance");
         game_board[37] = new Street("Park Place");
         game_board[38] = new Street("Luxury");
         game_board[39] = new Street("Boardwalk");
@@ -114,19 +114,19 @@ public class Game
         takeTurns();
         if(turn == 1)
         {
-            System.out.println(player1.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+            System.out.println(player1.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
         }
         if(turn == 2)
         {
-            System.out.println(player2.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+            System.out.println(player2.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
         }
         if(turn == 3)
         {
-            System.out.println(player3.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+            System.out.println(player3.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
         }
         if(turn == 4)
         {
-            System.out.println(player4.getPlayerName() + " you are on - " + game_board[player_list[turn-1]]);
+            System.out.println(player4.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
         }
     }
 }

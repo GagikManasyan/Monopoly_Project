@@ -11,4 +11,7 @@ public class Street extends Square
     {
 
     }
+    protected String getName(){
+        return name;
+    }
 }

@@ -6,4 +6,7 @@ public class Electricity extends Square {
         this.name= name;
 
     }
+    protected String getName(){
+        return name;
+    }
 }

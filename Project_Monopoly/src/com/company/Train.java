@@ -7,6 +7,9 @@ public class Train extends Square
     {
         this.name = name;
     }
+    protected String getName(){
+        return name;
+    }
 
 
 }

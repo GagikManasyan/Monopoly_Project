@@ -6,4 +6,7 @@ public class Jail extends Square {
     Jail (String name){
         this.name= name;
     }
+    protected String getName(){
+        return name;
+    }
 }
