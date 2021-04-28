@@ -16,6 +16,7 @@ public class Main {
 
 
 
+
         }
         while(c <= 100);
 

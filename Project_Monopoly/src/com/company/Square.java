@@ -6,4 +6,5 @@ public class Square
     private int price;
     private int rent_price;
 
+
 }

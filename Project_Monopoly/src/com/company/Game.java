@@ -63,33 +63,32 @@ public class Game
         int dice_roll = ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1);
         return dice_roll;
     }
-    private int takeTurns()
+    private void takeTurns()
     {
         turn = turn + 1;
-        if(turn > 3)
+        if(turn > 4)
         {
-            turn = 0;
+            turn = 1;
         }
-        return turn;
     }
     protected void Move()
     {
         int dice_roll = diceRoll();
-        int turn = takeTurns();
-        System.out.println("Player " + turn + " - " + "Current position - " +  + player_list[turn]);
+        int c = game_board.length - player_list[turn-1];
+        System.out.println("Current position - " + player_list[turn-1]);
         System.out.println("Dice - " + dice_roll);
+        player_list[turn-1] += dice_roll;
         System.out.println();
-        int c = game_board.length - player_list[turn];
-        player_list[turn] += dice_roll;
-        if(player_list[turn] > 39)
+        if(player_list[turn-1] > 39)
         {
-            player_list[turn] = 0;
-            player_list[turn] += dice_roll - c;
+            player_list[turn-1] = 0;
+            player_list[turn-1] += dice_roll - c;
 
         }
     }
     protected void Feedback()
     {
-        System.out.println("Player " + turn + " - " + game_board[player_list[turn]]);
+        takeTurns();
+        System.out.println("Player " + turn + " you are on - " + game_board[player_list[turn-1]]);
     }
 }
