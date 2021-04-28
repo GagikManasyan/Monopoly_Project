@@ -1,6 +1,6 @@
 package com.company;
 
-public class Chance
+public class Chance extends Square
 {
     private String [] chance_cards = {"Advance to Go (Collect $200)",
                                       "Advance to Illinois Ave—If you pass Go, collect $200",

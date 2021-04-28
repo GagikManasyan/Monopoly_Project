@@ -1,6 +1,6 @@
 package com.company;
 
-public class Water extends Property
+public class Water extends Square
 {
 
 }

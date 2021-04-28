@@ -1,4 +1,4 @@
 package com.company;
 
-public class Electricity extends Property {
+public class Electricity extends Square {
 }

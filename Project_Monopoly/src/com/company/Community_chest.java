@@ -1,6 +1,6 @@
 package com.company;
 
-public class Community_chest
+public class Community_chest extends Square
 {
     private String [] community_cards = {"Advance to Go (Collect $200)",
                                          "Bank error in your favor. Collect $200","Doctor’s fee. Pay $50",
