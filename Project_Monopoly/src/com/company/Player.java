@@ -6,7 +6,7 @@ public class Player
     private int player_budget;
     protected Player(String name)
     {
-        this.player_budget = 80;
+        this.player_budget = 1500;
         this.player_name = name;
     }
     protected void giveMoney(int money)
