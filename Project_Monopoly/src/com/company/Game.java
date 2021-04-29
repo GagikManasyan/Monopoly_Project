@@ -78,11 +78,21 @@ public class Game
     }
     protected void Move()
     {
-        int dice_roll = diceRoll();
+        int dice_roll = 0;
+        String command = inp.next();
+        if(command.equals("throw"))
+        {
+             dice_roll = diceRoll();
+        }
+        else
+        {
+            System.exit(0);
+        }
         int c = game_board.length - player_list[turn-1];
-        System.out.println("Current position - " + player_list[turn-1]);
         System.out.println("Dice - " + dice_roll);
+        System.out.println("Current position - " + player_list[turn-1]);
         player_list[turn-1] += dice_roll;
+        System.out.println("Next position - " + player_list[turn-1]);
         System.out.println();
         if(player_list[turn-1] > 39)
         {
