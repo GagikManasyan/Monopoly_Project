@@ -9,7 +9,6 @@ public class Main {
         do
         {
             c = c+1;
-            game.Feedback();
             game.Move();
 
 

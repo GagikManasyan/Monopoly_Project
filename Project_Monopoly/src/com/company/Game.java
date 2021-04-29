@@ -79,6 +79,7 @@ public class Game
     protected void Move()
     {
         int dice_roll = 0;
+        takeTurns();
         String command = inp.next();
         if(command.equals("throw"))
         {
@@ -93,6 +94,7 @@ public class Game
         System.out.println("Current position - " + player_list[turn-1]);
         player_list[turn-1] += dice_roll;
         System.out.println("Next position - " + player_list[turn-1]);
+        Feedback();
         System.out.println();
         if(player_list[turn-1] > 39)
         {
@@ -119,7 +121,7 @@ public class Game
     }
     protected void Feedback()
     {
-        takeTurns();
+
         if(turn == 1)
         {
             System.out.println(player1.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
