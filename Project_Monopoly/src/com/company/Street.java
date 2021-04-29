@@ -4,7 +4,7 @@ public class Street extends Square
 {
     private String name;
     private int price;
-    private String owner = "no one";
+    private Player owner;
     private boolean owned = false;
     protected Street (String name, int price)
     {
@@ -15,7 +15,7 @@ public class Street extends Square
     {
 
     }
-    protected void Own (String player, boolean owned)
+    protected void Own (Player player, boolean owned)
     {
         this.owner = player;
         this.owned = owned;
@@ -28,7 +28,7 @@ public class Street extends Square
     public boolean isOwned() {
         return owned;
     }
-    public String getOwner()
+    public Player getOwner()
     {
         return this.owner;
     }

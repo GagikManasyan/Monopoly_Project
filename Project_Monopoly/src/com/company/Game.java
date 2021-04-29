@@ -93,9 +93,6 @@ public class Game
         System.out.println("Dice - " + dice_roll);
         System.out.println("Current position - " + player_list[turn-1]);
         player_list[turn-1] += dice_roll;
-        System.out.println("Next position - " + player_list[turn-1]);
-        Feedback();
-        System.out.println();
         if(player_list[turn-1] > 39)
         {
             if(turn == 1)
@@ -118,12 +115,16 @@ public class Game
             player_list[turn-1] += dice_roll - c;
 
         }
+        System.out.println("Next position - " + player_list[turn-1]);
+        Feedback();
+        System.out.println();
     }
     protected void Feedback()
     {
 
         if(turn == 1)
         {
+            System.out.println(player1.getPlayerName() + " your budget is - " + player1.getPlayer_budget());
             System.out.println(player1.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
             if(game_board[player_list[turn-1]] instanceof Street)
             {
@@ -134,18 +135,28 @@ public class Game
                     input = inp.next().charAt(0);
                     if(input == 'y')
                     {
-                        player1.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
-                        ((Street) game_board[player_list[turn-1]]).Own(player1.getPlayerName(), true);
+                        if(player1.getPlayer_budget() > ((Street) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player1.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
+                            ((Street) game_board[player_list[turn-1]]).Own(player1, true);
+                            System.out.println("Congratulations " + player1.getPlayerName() + "you bought a property");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
+
                     }
                 }
                 else
                 {
-                    System.out.println("Owner is - " + ((Street) game_board[player_list[turn - 1]]).getOwner());
+                    System.out.println("The Owner of this property is - " + ((Street) game_board[player_list[turn - 1]]).getOwner());
                 }
             }
         }
         if(turn == 2)
         {
+            System.out.println(player2.getPlayerName() + " your budget is - " + player2.getPlayer_budget());
             System.out.println(player2.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
             if(game_board[player_list[turn-1]] instanceof Street)
             {
@@ -156,8 +167,16 @@ public class Game
                     input = inp.next().charAt(0);
                     if(input == 'y')
                     {
-                        player2.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
-                        ((Street) game_board[player_list[turn-1]]).Own(player2.getPlayerName(), true);
+                        if(player2.getPlayer_budget() > ((Street) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player2.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
+                            ((Street) game_board[player_list[turn-1]]).Own(player2, true);
+                            System.out.println("Congratulations " + player2.getPlayerName() + "you bought a property");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
                     }
                 }
                 else
@@ -168,6 +187,7 @@ public class Game
         }
         if(turn == 3)
         {
+            System.out.println(player3.getPlayerName() + " your budget is - " + player3.getPlayer_budget());
             System.out.println(player3.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
             if(game_board[player_list[turn-1]] instanceof Street)
             {
@@ -178,8 +198,16 @@ public class Game
                     input = inp.next().charAt(0);
                     if(input == 'y')
                     {
-                        player3.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
-                        ((Street) game_board[player_list[turn-1]]).Own(player3.getPlayerName(), true);
+                        if(player3.getPlayer_budget() > ((Street) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player3.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
+                            ((Street) game_board[player_list[turn-1]]).Own(player3, true);
+                            System.out.println("Congratulations " + player3.getPlayerName() + "you bought a property");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
                     }
                 }
                 else
@@ -190,6 +218,7 @@ public class Game
         }
         if(turn == 4)
         {
+            System.out.println(player4.getPlayerName() + " your budget is - " + player4.getPlayer_budget());
             System.out.println(player4.getPlayerName() + " you are on - " + game_board[player_list[turn-1]].getName());
             if(game_board[player_list[turn-1]] instanceof Street)
             {
@@ -200,8 +229,16 @@ public class Game
                     input = inp.next().charAt(0);
                     if(input == 'y')
                     {
-                        player4.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
-                        ((Street) game_board[player_list[turn-1]]).Own(player4.getPlayerName(), true);
+                        if(player4.getPlayer_budget() > ((Street) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player4.takeMoney(((Street) game_board[player_list[turn - 1]]).getPrice());
+                            ((Street) game_board[player_list[turn-1]]).Own(player1, true);
+                            System.out.println("Congratulations " + player4.getPlayerName() + "you bought a property");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
                     }
                 }
                 else
@@ -210,5 +247,29 @@ public class Game
                 }
             }
         }
+    }
+    protected boolean gameOver()
+    {
+        if(this.player1.bankrupt() == false && this.player2.bankrupt() == true && this.player3.bankrupt() == true && this.player4.bankrupt() == true)
+        {
+            System.out.println("Game over, " + player1.getPlayerName() + " wins");
+            return true;
+        }
+        if(this.player2.bankrupt() == false && this.player1.bankrupt() == true && this.player3.bankrupt() == true && this.player4.bankrupt() == true)
+        {
+            System.out.println("Game over, " + player2.getPlayerName() + " wins");
+            return true;
+        }
+        if(this.player3.bankrupt() == false && this.player1.bankrupt() == true && this.player2.bankrupt() == true && this.player4.bankrupt() == true)
+        {
+            System.out.println("Game over, " + player3.getPlayerName() + " wins");
+            return true;
+        }
+        if(this.player4.bankrupt() == false && this.player3.bankrupt() == true && this.player2.bankrupt() == true && this.player1.bankrupt() == true)
+        {
+            System.out.println("Game over, " + player4.getPlayerName() + " wins");
+            return true;
+        }
+        return false;
     }
 }
