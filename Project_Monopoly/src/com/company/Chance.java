@@ -2,7 +2,7 @@ package com.company;
 
 public class Chance extends Square
 {
-    private String name;
+    private String name = "Chance";
     private String [] chance_cards = {"Advance to Go (Collect $200)",
                                       "Advance to Illinois Ave—If you pass Go, collect $200",
                                       "Advance to St. Charles Place – If you pass Go, collect $200",
@@ -22,10 +22,8 @@ public class Chance extends Square
     {
 
     }
-    Chance (String name){
-        this.name=name;
-    }
     protected String getName(){
-        return name;
+        return this.name;
     }
+
 }

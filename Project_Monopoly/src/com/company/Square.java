@@ -16,5 +16,4 @@ public class Square
     protected String getName(){
         return name;
     }
-
 }

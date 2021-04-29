@@ -2,7 +2,7 @@ package com.company;
 
 public class Community_chest extends Square
 {
-    private String name;
+    private String name = "Chance";
     private String [] community_cards = {"Advance to Go (Collect $200)",
                                          "Bank error in your favor. Collect $200","Doctor’s fee. Pay $50",
                                          "From sale of stock you get $50",
@@ -22,12 +22,8 @@ public class Community_chest extends Square
     {
 
     }
-    Community_chest (String name){
-        this.name = name;
-    }
     protected String getName(){
-        return name;
+        return this.name;
     }
-
 
 }
