@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Community_chest extends Square
 {
     private String name = "Chance";
@@ -18,11 +20,12 @@ public class Community_chest extends Square
                                          "You are assessed for street repair. $40 per house. $115 per hotel",
                                          "You have won second prize in a beauty contest. Collect $10",
                                          "You inherit $100"};
-    protected void action ()
+    protected void action (Player player)
     {
 
     }
-    protected String getName(){
+    protected String getName()
+    {
         return this.name;
     }
 

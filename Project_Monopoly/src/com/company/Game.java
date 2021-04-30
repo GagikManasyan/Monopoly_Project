@@ -22,17 +22,17 @@ public class Game
         game_board[2] = new Community_chest();
         game_board[3] = new Street("Baltic Avenue", 60, 4);
         game_board[4] = new Square("Tax");
-        game_board[5] = new Train("Train 1");
+        game_board[5] = new Train("Train 1", 200, 25);
         game_board[6] = new Street("Oriental Avenue", 100, 6);
         game_board[7] = new Chance();
         game_board[8] = new Street("Vermont Avenue", 100, 6);
         game_board[9] = new Street("Connecticut Avenue", 120, 8);
         game_board[10] = new Jail();
         game_board[11] = new Street("St Charles Place", 140, 10);
-        game_board[12] = new Electricity();
+        game_board[12] = new Electricity(150);
         game_board[13] = new Street("States Avenue", 140, 10);
         game_board[14] = new Street("Virginia Avenue", 160, 12);
-        game_board[15] = new Train("Train 2");
+        game_board[15] = new Train("Train 2", 200, 25);
         game_board[16] = new Street("St James Place", 180, 14);
         game_board[17] = new Street("Tennessee Avenue", 180, 14);
         game_board[18] = new Community_chest();
@@ -42,17 +42,17 @@ public class Game
         game_board[22] = new Chance();
         game_board[23] = new Street("Indiana Avenue", 220, 18);
         game_board[24] = new Street("Illinois Avenue", 240, 20);
-        game_board[25] = new Train("Train 3");
+        game_board[25] = new Train("Train 3", 200, 25);
         game_board[26] = new Street("Atlantic Avenue", 260, 22);
         game_board[27] = new Street("Ventnor Avenue", 260, 22);
-        game_board[28] = new Water();
+        game_board[28] = new Water(150);
         game_board[29] = new Street("Marvin Gardens", 290, 24);
         game_board[30] = new Square("Go to jail");
         game_board[31] = new Street("Pacific Avenue", 300,  26);
         game_board[32] = new Street("North Carolina Avenue", 300, 26);
         game_board[33] = new Community_chest();
         game_board[34] = new Street("Pennsylvania Avenue", 320, 26);
-        game_board[35] = new Train("Train 4");
+        game_board[35] = new Train("Train 4", 200, 25);
         game_board[36] = new Chance();
         game_board[37] = new Street("Park Place", 350, 35);
         game_board[38] = new Square ("Luxury");
@@ -156,6 +156,35 @@ public class Game
                     ((Street) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
                 }
             }
+            if(game_board[player_list[turn-1]] instanceof Train)
+            {
+                if(((Train) game_board[player_list[turn-1]]).isOwned() == false)
+                {
+                    System.out.println(player1.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
+                    char input;
+                    input = inp.next().charAt(0);
+                    if(input == 'y')
+                    {
+                        if(player1.getPlayer_budget() > ((Train) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player1.takeMoney(((Train) game_board[player_list[turn - 1]]).getPrice());
+                            ((Train) game_board[player_list[turn-1]]).Own(player1, true);
+                            System.out.println("Congratulations " + player1.getPlayerName() + " you bought a station");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
+                }
+                }
+                else if (((Train) game_board[player_list[turn-1]]).getOwner() != player1)
+                {
+                    System.out.println("The Owner of this station is - " + ((Train) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
+                    player1.takeMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
+                }
+            }
         }
         if(turn == 2)
         {
@@ -182,12 +211,41 @@ public class Game
                         }
                     }
                 }
-                else
+                else if (((Street) game_board[player_list[turn-1]]).getOwner() != player2)
                 {
                     System.out.println("The Owner of this property is - " + ((Street) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
                     player2.takeMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
                     System.out.println("Giving rent money to the owner");
                     ((Street) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
+                }
+            }
+            if(game_board[player_list[turn-1]] instanceof Train)
+            {
+                if(((Train) game_board[player_list[turn-1]]).isOwned() == false)
+                {
+                    System.out.println(player2.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
+                    char input;
+                    input = inp.next().charAt(0);
+                    if(input == 'y')
+                    {
+                        if(player2.getPlayer_budget() > ((Train) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player2.takeMoney(((Train) game_board[player_list[turn - 1]]).getPrice());
+                            ((Train) game_board[player_list[turn-1]]).Own(player2, true);
+                            System.out.println("Congratulations " + player2.getPlayerName() + " you bought a station");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
+                    }
+                }
+                else if (((Train) game_board[player_list[turn-1]]).getOwner() != player2)
+                {
+                    System.out.println("The Owner of this station is - " + ((Train) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
+                    player2.takeMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
                 }
             }
         }
@@ -216,12 +274,41 @@ public class Game
                         }
                     }
                 }
-                else
+                else if (((Street) game_board[player_list[turn-1]]).getOwner() != player3)
                 {
                     System.out.println("The Owner of this property is - " + ((Street) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
                     player3.takeMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
                     System.out.println("Giving rent money to the owner");
                     ((Street) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
+                }
+            }
+            if(game_board[player_list[turn-1]] instanceof Train)
+            {
+                if(((Train) game_board[player_list[turn-1]]).isOwned() == false)
+                {
+                    System.out.println(player3.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
+                    char input;
+                    input = inp.next().charAt(0);
+                    if(input == 'y')
+                    {
+                        if(player3.getPlayer_budget() > ((Train) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player3.takeMoney(((Train) game_board[player_list[turn - 1]]).getPrice());
+                            ((Train) game_board[player_list[turn-1]]).Own(player3, true);
+                            System.out.println("Congratulations " + player3.getPlayerName() + " you bought a station");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
+                    }
+                }
+                else if (((Train) game_board[player_list[turn-1]]).getOwner() != player3)
+                {
+                    System.out.println("The Owner of this station is - " + ((Train) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
+                    player3.takeMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
                 }
             }
         }
@@ -250,12 +337,41 @@ public class Game
                         }
                     }
                 }
-                else
+                else if (((Street) game_board[player_list[turn-1]]).getOwner() != player4)
                 {
                     System.out.println("The Owner of this property is - " + ((Street) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
                     player4.takeMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
                     System.out.println("Giving rent money to the owner");
                     ((Street) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Street) game_board[player_list[turn - 1]]).getRentPrice());
+                }
+            }
+            if(game_board[player_list[turn-1]] instanceof Train)
+            {
+                if(((Train) game_board[player_list[turn-1]]).isOwned() == false)
+                {
+                    System.out.println(player4.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
+                    char input;
+                    input = inp.next().charAt(0);
+                    if(input == 'y')
+                    {
+                        if(player4.getPlayer_budget() > ((Train) game_board[player_list[turn - 1]]).getPrice())
+                        {
+                            player4.takeMoney(((Train) game_board[player_list[turn - 1]]).getPrice());
+                            ((Train) game_board[player_list[turn-1]]).Own(player4, true);
+                            System.out.println("Congratulations " + player4.getPlayerName() + " you bought a station");
+                        }
+                        else
+                        {
+                            System.out.println("you don't have enough money !!!");
+                        }
+                    }
+                }
+                else if (((Train) game_board[player_list[turn-1]]).getOwner() != player4)
+                {
+                    System.out.println("The Owner of this station is - " + ((Train) game_board[player_list[turn - 1]]).getOwner().getPlayerName());
+                    player4.takeMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player_list[turn - 1]]).getOwner().giveMoney(((Train) game_board[player_list[turn - 1]]).getRentPrice());
                 }
             }
         }
