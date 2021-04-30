@@ -116,6 +116,7 @@ public class Game
         {
             if(((Street) game_board[player_list[turn-1].position]).isOwned() == false)
             {
+                System.out.println("Price is - " + ((Street) game_board[player_list[turn-1].position]).getPrice());
                 System.out.println(player_list[turn-1].getPlayerName() + " do you wish to buy this street ? |y,n| - ");
                 char input;
                 input = inp.next().charAt(0);
@@ -123,7 +124,7 @@ public class Game
                 {
                     if(player_list[turn-1].getPlayer_budget() > ((Street) game_board[player_list[turn - 1].position]).getPrice())
                     {
-                        player1.takeMoney(((Street) game_board[player_list[turn - 1].position]).getPrice());
+                        player_list[turn-1].takeMoney(((Street) game_board[player_list[turn - 1].position]).getPrice());
                         ((Street) game_board[player_list[turn-1].position]).Own(player_list[turn-1], true);
                         System.out.println("Congratulations " + player_list[turn-1].getPlayerName() + " you bought a property");
                     }
@@ -146,6 +147,7 @@ public class Game
         {
             if(((Train) game_board[player_list[turn-1].position]).isOwned() == false)
             {
+                System.out.println("Price is - " + ((Train) game_board[player_list[turn-1].position]).getPrice());
                 System.out.println(player_list[turn-1].getPlayerName() + " do you wish to buy this station ? |y,n| - ");
                 char input;
                 input = inp.next().charAt(0);
@@ -166,7 +168,7 @@ public class Game
             else if (((Train) game_board[player_list[turn-1].position]).getOwner() != player_list[turn-1])
             {
                 System.out.println("The Owner of this station is - " + ((Train) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
-                player1.takeMoney(((Train) game_board[player_list[turn - 1].position]).getRentPrice());
+                player_list[turn-1].takeMoney(((Train) game_board[player_list[turn - 1].position]).getRentPrice());
                 System.out.println("Giving rent money to the owner");
                 ((Train) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Train) game_board[player_list[turn - 1].position]).getRentPrice());
             }
