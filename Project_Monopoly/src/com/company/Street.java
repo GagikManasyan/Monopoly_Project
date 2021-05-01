@@ -27,19 +27,24 @@ public class Street extends Square
         return name;
     }
 
-    public boolean isOwned() {
+    protected boolean isOwned() {
         return owned;
     }
-    public Player getOwner()
+    protected Player getOwner()
     {
         return this.owner;
     }
 
-    public int getPrice() {
+    protected int getPrice() {
         return price;
     }
 
-    public int getRentPrice() {
+    protected int getRentPrice() {
         return rent_price;
     }
+    protected void doubleRent()
+    {
+        this.rent_price = 2 * this.rent_price;
+    }
+
 }

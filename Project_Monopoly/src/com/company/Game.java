@@ -100,12 +100,14 @@ public class Game
     }
     protected void Move()
     {
+        ((Street) game_board[1]).Own(player1,true);
+        ((Street) game_board[3]).Own(player1,true);
         int dice_roll = 0;
         takeTurns();
         String command = inp.next();
         if(command.equals("throw"))
         {
-             dice_roll = diceRoll();
+            dice_roll = diceRoll();
         }
         else
         {
@@ -159,6 +161,88 @@ public class Game
                 player_list[turn-1].takeMoney(((Street) game_board[player_list[turn - 1].position]).getRentPrice());
                 System.out.println("Giving rent money to the owner");
                 ((Street) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Street) game_board[player_list[turn - 1].position]).getRentPrice());
+            }
+            else
+            {
+                if(((Street) game_board[1]).isOwned() && ((Street) game_board[3]).isOwned())
+                {
+                    if(((Street) game_board[1]).getOwner().equals(((Street) game_board[3]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[1]).doubleRent();
+                        ((Street) game_board[3]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[6]).isOwned() && ((Street) game_board[8]).isOwned() && ((Street) game_board[9]).isOwned())
+                {
+                    if(((Street) game_board[6]).getOwner().equals(((Street) game_board[8]).getOwner()) && ((Street) game_board[6]).getOwner().equals(((Street) game_board[9]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[6]).doubleRent();
+                        ((Street) game_board[8]).doubleRent();
+                        ((Street) game_board[9]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[11]).isOwned() && ((Street) game_board[13]).isOwned() && ((Street) game_board[14]).isOwned())
+                {
+                    if(((Street) game_board[11]).getOwner().equals(((Street) game_board[13]).getOwner()) && ((Street) game_board[11]).getOwner().equals(((Street) game_board[14]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[11]).doubleRent();
+                        ((Street) game_board[13]).doubleRent();
+                        ((Street) game_board[14]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[16]).isOwned() && ((Street) game_board[17]).isOwned() && ((Street) game_board[19]).isOwned())
+                {
+                    if(((Street) game_board[16]).getOwner().equals(((Street) game_board[17]).getOwner()) && ((Street) game_board[16]).getOwner().equals(((Street) game_board[19]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[16]).doubleRent();
+                        ((Street) game_board[17]).doubleRent();
+                        ((Street) game_board[19]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[21]).isOwned() && ((Street) game_board[23]).isOwned() && ((Street) game_board[24]).isOwned())
+                {
+                    if(((Street) game_board[21]).getOwner().equals(((Street) game_board[23]).getOwner()) && ((Street) game_board[21]).getOwner().equals(((Street) game_board[24]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[21]).doubleRent();
+                        ((Street) game_board[23]).doubleRent();
+                        ((Street) game_board[24]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[26]).isOwned() && ((Street) game_board[27]).isOwned() && ((Street) game_board[29]).isOwned())
+                {
+                    if(((Street) game_board[26]).getOwner().equals(((Street) game_board[27]).getOwner()) && ((Street) game_board[26]).getOwner().equals(((Street) game_board[29]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[26]).doubleRent();
+                        ((Street) game_board[27]).doubleRent();
+                        ((Street) game_board[29]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[31]).isOwned() && ((Street) game_board[32]).isOwned() && ((Street) game_board[34]).isOwned())
+                {
+                    if(((Street) game_board[31]).getOwner().equals(((Street) game_board[32]).getOwner()) && ((Street) game_board[31]).getOwner().equals(((Street) game_board[34]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[31]).doubleRent();
+                        ((Street) game_board[32]).doubleRent();
+                        ((Street) game_board[34]).doubleRent();
+                    }
+                }
+                if(((Street) game_board[37]).isOwned() && ((Street) game_board[39]).isOwned())
+                {
+                    if(((Street) game_board[37]).getOwner().equals(((Street) game_board[39]).getOwner()))
+                    {
+                        System.out.println(((Street) game_board[1]).getOwner().getPlayerName() + " you have a set street the rent is doubled");
+                        ((Street) game_board[37]).doubleRent();
+                        ((Street) game_board[39]).doubleRent();
+                    }
+                }
+
             }
         }
         if(game_board[player_list[turn-1].position] instanceof Train)
@@ -216,10 +300,9 @@ public class Game
             else if (((Water) game_board[player_list[turn-1].position]).getOwner() != player_list[turn-1])
             {
                 System.out.println("The Owner of this Water station is - " + ((Water) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
-                int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1))*10;
-                player_list[turn-1].takeMoney(player_tax);
-                System.out.println("Giving " + player_tax + " rent money to the owner");
-                ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax);
+                player_list[turn-1].takeMoney(((Water) game_board[player_list[turn - 1].position]).getRentPrice());
+                System.out.println("Giving rent money to the owner");
+                ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Water) game_board[player_list[turn - 1].position]).getRentPrice());
             }
         }
         if(game_board[player_list[turn-1].position] instanceof Electricity)
@@ -247,13 +330,12 @@ public class Game
             else if (((Electricity) game_board[player_list[turn-1].position]).getOwner() != player_list[turn-1])
             {
                 System.out.println("The Owner of this Electricity station is - " + ((Electricity) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
-                int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1))*10;
-                player_list[turn-1].takeMoney(player_tax);
-                System.out.println("Giving " + player_tax + " rent money to the owner");
-                ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax);
+                player_list[turn-1].takeMoney(((Electricity) game_board[player_list[turn - 1].position]).getRentPrice());
+                System.out.println("Giving rent money to the owner");
+                ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Electricity) game_board[player_list[turn - 1].position]).getRentPrice());
             }
         }
-        /*if(game_board[player_list[turn-1].position] instanceof Chance){
+        if(game_board[player_list[turn-1].position] instanceof Chance){
             int card_number = 3;
             if (card_number == 0){
                 System.out.println("Advance to Go (Collect $200)");
@@ -339,10 +421,10 @@ public class Game
                     }
                 }
             }
-            else if (card_number == 4) {
+            /*else if (card_number == 4) {
 
-            }
-        }*/
+            }*/
+        }
     }
     protected boolean gameOver()
     {
