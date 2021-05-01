@@ -63,7 +63,7 @@ public class Game
         game_board[38] = new Square ("Luxury");
         game_board[39] = new Street("Boardwalk", 400, 50);
     }
-    enum chance_Cards {
+    /*enum chance_Cards {
         Advance_to_Go_Collect_$200,
         Advance_to_Illinois_Ave_If_you_pass_Go_collect_$200,
         Advance_to_St_Charles_Place_If_you_pass_Go_collect_$200,
@@ -80,7 +80,7 @@ public class Game
         You_have_been_elected_Chairman_of_the_Board_Pay_each_player_$50,
         Your_building_and_loan_matures_Collect_$150,
         You_have_won_a_crossword_competition_Collect_$100
-    }
+    }*/
     protected void Print_board ()
     {
 
@@ -216,9 +216,10 @@ public class Game
             else if (((Water) game_board[player_list[turn-1].position]).getOwner() != player_list[turn-1])
             {
                 System.out.println("The Owner of this Water station is - " + ((Water) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
-                player_list[turn-1].takeMoney(((Water) game_board[player_list[turn - 1].position]).getRentPrice());
-                System.out.println("Giving rent money to the owner");
-                ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Water) game_board[player_list[turn - 1].position]).getRentPrice());
+                int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1))*10;
+                player_list[turn-1].takeMoney(player_tax);
+                System.out.println("Giving " + player_tax + " rent money to the owner");
+                ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax);
             }
         }
         if(game_board[player_list[turn-1].position] instanceof Electricity)
@@ -246,12 +247,13 @@ public class Game
             else if (((Electricity) game_board[player_list[turn-1].position]).getOwner() != player_list[turn-1])
             {
                 System.out.println("The Owner of this Electricity station is - " + ((Electricity) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
-                player_list[turn-1].takeMoney(((Electricity) game_board[player_list[turn - 1].position]).getRentPrice());
-                System.out.println("Giving rent money to the owner");
-                ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Electricity) game_board[player_list[turn - 1].position]).getRentPrice());
+                int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1))*10;
+                player_list[turn-1].takeMoney(player_tax);
+                System.out.println("Giving " + player_tax + " rent money to the owner");
+                ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax);
             }
         }
-        if(game_board[player_list[turn-1].position] instanceof Chance){
+        /*if(game_board[player_list[turn-1].position] instanceof Chance){
             int card_number = 3;
             if (card_number == 0){
                 System.out.println("Advance to Go (Collect $200)");
@@ -337,10 +339,10 @@ public class Game
                     }
                 }
             }
-            /*else if (card_number == 4) {
+            else if (card_number == 4) {
 
-            }*/
-        }
+            }
+        }*/
     }
     protected boolean gameOver()
     {
