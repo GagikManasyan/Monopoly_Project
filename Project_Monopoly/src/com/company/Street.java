@@ -17,6 +17,10 @@ public class Street extends Square
     {
 
     }
+    protected void AddHouse()
+    {
+
+    }
     protected void Own (Player player, boolean owned)
     {
         this.owner = player;

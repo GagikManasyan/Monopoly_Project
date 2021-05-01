@@ -105,28 +105,44 @@ public class Game
         int dice_roll = 0;
         takeTurns();
         String command = inp.next();
-        if(command.equals("throw"))
+        int jaildayscount = 0;
+        if(player_list[turn-1].isInJail() == true)
         {
-            dice_roll = diceRoll();
+            System.out.println(player_list[turn-1].getPlayerName() + " you are in Jail");
+            jaildayscount = jaildayscount + 1;
+            if(jaildayscount == 1)
+            {
+                jaildayscount = 0;
+                player_list[turn-1].FreeJail();
+            }
+
         }
         else
         {
-            System.exit(0);
-        }
-        int c = game_board.length - player_list[turn-1].position;
-        System.out.println("Dice - " + dice_roll);
-        System.out.println("Current position - " + player_list[turn-1].position);
-        player_list[turn-1].position += dice_roll;
-        if(player_list[turn-1].position > 39)
-        {
-            player_list[turn-1].giveMoney(200);
-            player_list[turn-1].position = 0;
-            player_list[turn-1].position += dice_roll - c;
+            if(command.equals("throw"))
+            {
+                dice_roll = diceRoll();
+            }
+            else
+            {
+                System.exit(0);
+            }
+            int c = game_board.length - player_list[turn-1].position;
+            System.out.println("Dice - " + dice_roll);
+            System.out.println("Current position - " + player_list[turn-1].position);
+            player_list[turn-1].position += dice_roll;
+            if(player_list[turn-1].position > 39)
+            {
+                player_list[turn-1].giveMoney(200);
+                player_list[turn-1].position = 0;
+                player_list[turn-1].position += dice_roll - c;
 
+            }
+            System.out.println("Next position - " + player_list[turn-1].position);
+            Feedback();
+            System.out.println();
         }
-        System.out.println("Next position - " + player_list[turn-1].position);
-        Feedback();
-        System.out.println();
+
     }
     protected void Feedback()
     {
@@ -335,7 +351,12 @@ public class Game
                 ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(((Electricity) game_board[player_list[turn - 1].position]).getRentPrice());
             }
         }
-        if(game_board[player_list[turn-1].position] instanceof Chance){
+        if(player_list[turn-1].position == 30)
+        {
+            player_list[turn-1].goToJail();
+
+        }
+        /*if(game_board[player_list[turn-1].position] instanceof Chance){
             int card_number = 3;
             if (card_number == 0){
                 System.out.println("Advance to Go (Collect $200)");
@@ -421,10 +442,10 @@ public class Game
                     }
                 }
             }
-            /*else if (card_number == 4) {
+            *//*else if (card_number == 4) {
 
-            }*/
-        }
+            }*//*
+        }*/
     }
     protected boolean gameOver()
     {

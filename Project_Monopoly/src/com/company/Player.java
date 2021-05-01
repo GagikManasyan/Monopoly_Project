@@ -5,6 +5,7 @@ public class Player
     private String player_name;
     private int player_budget;
     protected int position = 0;
+    private boolean inJail = false;
     protected Player(String name)
     {
         this.player_budget = 1500;
@@ -26,6 +27,15 @@ public class Player
     {
         return this.player_budget;
     }
+    protected void goToJail ()
+    {
+        this.inJail = true;
+        this.position = 10;
+    }
+    protected void FreeJail ()
+    {
+        this.inJail = false;
+    }
     protected boolean bankrupt()
     {
         if(this.player_budget == 0)
@@ -33,5 +43,9 @@ public class Player
             return true;
         }
         return false;
+    }
+
+    protected boolean isInJail() {
+        return inJail;
     }
 }
