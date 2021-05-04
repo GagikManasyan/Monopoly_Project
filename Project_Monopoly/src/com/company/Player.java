@@ -3,6 +3,7 @@ package com.company;
 public class Player
 {
     private String player_name;
+    private boolean outOfJailCard = false;
     private int player_budget;
     protected int position = 0;
     private boolean inJail = false;
@@ -35,6 +36,10 @@ public class Player
     protected void FreeJail ()
     {
         this.inJail = false;
+    }
+    protected void outOfJailCard (boolean status)
+    {
+        this.outOfJailCard = status;
     }
     protected boolean bankrupt()
     {
