@@ -10,10 +10,28 @@ public class Game extends GameBoard
     private Player player4;
     private static int turn = 0;
     private static int chance_count = -1;
+    private static int chest_count = -1;
     private Player [] player_list = new Player[4];
     private Chance [] chance_cards = new Chance[16];
+    private Community_Chest [] chest_cards = new Community_Chest[16];
     protected Game (String player1, String player2, String player3, String player4)
     {
+        chest_cards[0] = new Community_Chest("Advance to Go. (Collect $200)",ActionType.MoveToGo, 0 );
+        chest_cards[1] = new Community_Chest("Bank error in your favor. Collect $200",ActionType.GiveMoney, 200);
+        chest_cards[2] = new Community_Chest("Doctor’s fee. Pay $50",ActionType.TakeMoney, 50);
+        chest_cards[3] = new Community_Chest("From sale of stock you get $50",ActionType.GiveMoney , 50);
+        chest_cards[4] = new Community_Chest("Get Out of Jail Free",ActionType.Jailcard,0);
+        chest_cards[5] = new Community_Chest("Go to Jail. Go directly to jail, do not pass Go, do not collect $200",ActionType.Move , 30);
+        chest_cards[6] = new Community_Chest("Holiday fund matures. Receive $100",ActionType.GiveMoney, 100);
+        chest_cards[7] = new Community_Chest("Income tax refund. Collect $20",ActionType.GiveMoney, 20);
+        chest_cards[8] = new Community_Chest("It is your birthday. Collect $10 from every player",ActionType.GiveMoney, 30);
+        chest_cards[9] = new Community_Chest( "Life insurance matures. Collect $100",ActionType.GiveMoney,100);
+        chest_cards[10] = new Community_Chest("Pay hospital fees of $100",ActionType.TakeMoney, 100);
+        chest_cards[11] = new Community_Chest("Pay school fees of $50",ActionType.TakeMoney, 50);
+        chest_cards[12] = new Community_Chest("Receive $25 consultancy fee",ActionType.GiveMoney, 25);
+        chest_cards[13] = new Community_Chest("You are assessed for street repair. $40 per house. $115 per hotel",ActionType.PayForEachHotel, 115);
+        chest_cards[14] = new Community_Chest( "You have won second prize in a beauty contest. Collect $10",ActionType.GiveMoney,10);
+        chest_cards[15] = new Community_Chest( "You inherit $100",ActionType.GiveMoney,100);
         chance_cards[0] = new Chance("Advance to Go (Collect $200)",ActionType.MoveToGo, 0);
         chance_cards[1] = new Chance("Advance to Illinois Ave—If you pass Go, collect $200", ActionType.Move, 23);
         chance_cards[2] = new Chance("Advance to St. Charles Place – If you pass Go, collect $200", ActionType.Move, 11);
@@ -60,6 +78,14 @@ public class Game extends GameBoard
             chance_count = 0;
         }
 
+    }
+    protected void Chest_Count()
+    {
+      chest_count += 1;
+      if(chest_count > 15)
+      {
+          chest_count = 0;
+      }
     }
     protected void Move()
     {
@@ -346,6 +372,13 @@ public class Game extends GameBoard
             chance_cards[chance_count].doAction(player_list[turn-1]);
             Feedback();
 
+        }
+        if(game_board[player_list[turn-1].position].getName().equals("Chest"))
+        {
+            Chest_Count();
+            chest_cards[chest_count].getText();
+            chest_cards[chest_count].doAction(player_list[turn-1]);
+            Feedback();
         }
         if(player_list[turn-1].position == 30)
         {
