@@ -7,6 +7,7 @@ public class Player
     private int player_budget;
     protected int position = 0;
     private boolean inJail = false;
+    private boolean hasSet = false;
     protected Player(String name)
     {
         this.player_budget = 1500;
@@ -52,5 +53,12 @@ public class Player
 
     protected boolean isInJail() {
         return inJail;
+    }
+
+    protected void isHasSet(boolean hasSet) {
+        this.hasSet = hasSet;
+    }
+    protected boolean getHasSet() {
+        return this.hasSet;
     }
 }

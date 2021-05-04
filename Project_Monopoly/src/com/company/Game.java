@@ -81,15 +81,15 @@ public class Game extends GameBoard
     }
     protected void Chest_Count()
     {
-      chest_count += 1;
-      if(chest_count > 15)
-      {
-          chest_count = 0;
-      }
+        chest_count += 1;
+        if(chest_count > 15)
+        {
+            chest_count = 0;
+        }
     }
     protected void Move()
     {
-        /*((Street) game_board[1]).Own(player1,true);
+        ((Street) game_board[1]).Own(player1,true);
         ((Street) game_board[3]).Own(player1,true);
 
         ((Street) game_board[6]).Own(player1,true);
@@ -117,7 +117,7 @@ public class Game extends GameBoard
         ((Street) game_board[34]).Own(player1,true);
 
         ((Street) game_board[37]).Own(player1,true);
-        ((Street) game_board[39]).Own(player1,true);*/
+        ((Street) game_board[39]).Own(player1,true);
 
         int dice_roll = 0;
         takeTurns();
@@ -165,76 +165,102 @@ public class Game extends GameBoard
         {
             if(((Street) game_board[1]).getOwner().equals(((Street) game_board[3]).getOwner()))
             {
-                ((Street) game_board[1]).isSet(true);
-                ((Street) game_board[3]).isSet(true);
+                ((Street) game_board[1]).isSet(true, ((Street) game_board[1]).getOwner());
+                ((Street) game_board[3]).isSet(true, ((Street) game_board[1]).getOwner());
             }
         }
         if(((Street) game_board[6]).isOwned() && ((Street) game_board[8]).isOwned() && ((Street) game_board[9]).isOwned())
         {
             if(((Street) game_board[6]).getOwner().equals(((Street) game_board[8]).getOwner()) && ((Street) game_board[6]).getOwner().equals(((Street) game_board[9]).getOwner()))
             {
-                ((Street) game_board[6]).isSet(true);
-                ((Street) game_board[8]).isSet(true);
-                ((Street) game_board[9]).isSet(true);
+                ((Street) game_board[6]).isSet(true, ((Street) game_board[6]).getOwner());
+                ((Street) game_board[8]).isSet(true, ((Street) game_board[8]).getOwner());
+                ((Street) game_board[9]).isSet(true, ((Street) game_board[9]).getOwner());
             }
         }
         if(((Street) game_board[11]).isOwned() && ((Street) game_board[13]).isOwned() && ((Street) game_board[14]).isOwned())
         {
             if(((Street) game_board[11]).getOwner().equals(((Street) game_board[13]).getOwner()) && ((Street) game_board[11]).getOwner().equals(((Street) game_board[14]).getOwner()))
             {
-                ((Street) game_board[11]).isSet(true);
-                ((Street) game_board[13]).isSet(true);
-                ((Street) game_board[14]).isSet(true);
+                ((Street) game_board[11]).isSet(true, ((Street) game_board[11]).getOwner());
+                ((Street) game_board[13]).isSet(true, ((Street) game_board[13]).getOwner());
+                ((Street) game_board[14]).isSet(true, ((Street) game_board[14]).getOwner());
             }
         }
         if(((Street) game_board[16]).isOwned() && ((Street) game_board[18]).isOwned() && ((Street) game_board[19]).isOwned())
         {
             if(((Street) game_board[16]).getOwner().equals(((Street) game_board[18]).getOwner()) && ((Street) game_board[16]).getOwner().equals(((Street) game_board[19]).getOwner()))
             {
-                ((Street) game_board[16]).isSet(true);
-                ((Street) game_board[18]).isSet(true);
-                ((Street) game_board[19]).isSet(true);
+                ((Street) game_board[16]).isSet(true, ((Street) game_board[16]).getOwner());
+                ((Street) game_board[18]).isSet(true, ((Street) game_board[18]).getOwner());
+                ((Street) game_board[19]).isSet(true, ((Street) game_board[19]).getOwner());
             }
         }
         if(((Street) game_board[21]).isOwned() && ((Street) game_board[23]).isOwned() && ((Street) game_board[24]).isOwned())
         {
             if(((Street) game_board[21]).getOwner().equals(((Street) game_board[23]).getOwner()) && ((Street) game_board[21]).getOwner().equals(((Street) game_board[24]).getOwner()))
             {
-                ((Street) game_board[21]).isSet(true);
-                ((Street) game_board[23]).isSet(true);
-                ((Street) game_board[24]).isSet(true);
+                ((Street) game_board[21]).isSet(true, ((Street) game_board[21]).getOwner());
+                ((Street) game_board[23]).isSet(true, ((Street) game_board[23]).getOwner());
+                ((Street) game_board[24]).isSet(true, ((Street) game_board[24]).getOwner());
             }
         }
         if(((Street) game_board[26]).isOwned() && ((Street) game_board[27]).isOwned() && ((Street) game_board[29]).isOwned())
         {
             if(((Street) game_board[26]).getOwner().equals(((Street) game_board[27]).getOwner()) && ((Street) game_board[26]).getOwner().equals(((Street) game_board[29]).getOwner()))
             {
-                ((Street) game_board[26]).isSet(true);
-                ((Street) game_board[27]).isSet(true);
-                ((Street) game_board[29]).isSet(true);
+                ((Street) game_board[26]).isSet(true, ((Street) game_board[26]).getOwner());
+                ((Street) game_board[27]).isSet(true, ((Street) game_board[27]).getOwner());
+                ((Street) game_board[29]).isSet(true, ((Street) game_board[29]).getOwner());
             }
         }
         if(((Street) game_board[31]).isOwned() && ((Street) game_board[32]).isOwned() && ((Street) game_board[34]).isOwned())
         {
             if(((Street) game_board[31]).getOwner().equals(((Street) game_board[32]).getOwner()) && ((Street) game_board[31]).getOwner().equals(((Street) game_board[34]).getOwner()))
             {
-                ((Street) game_board[31]).isSet(true);
-                ((Street) game_board[32]).isSet(true);
-                ((Street) game_board[34]).isSet(true);
+                ((Street) game_board[31]).isSet(true, ((Street) game_board[31]).getOwner());
+                ((Street) game_board[32]).isSet(true, ((Street) game_board[32]).getOwner());
+                ((Street) game_board[34]).isSet(true, ((Street) game_board[34]).getOwner());
             }
         }
         if(((Street) game_board[37]).isOwned() && ((Street) game_board[39]).isOwned())
         {
             if(((Street) game_board[37]).getOwner().equals(((Street) game_board[39]).getOwner()))
             {
-                ((Street) game_board[37]).isSet(true);
-                ((Street) game_board[39]).isSet(true);
+                ((Street) game_board[37]).isSet(true, ((Street) game_board[37]).getOwner());
+                ((Street) game_board[39]).isSet(true, ((Street) game_board[39]).getOwner());
             }
         }
+    }
+    protected void addHouse ()
+    {
+        if(player_list[turn-1].getHasSet() == true)
+        {
+            System.out.println(player_list[turn-1].getPlayerName() + " do you wish to add a house ?");
+            String command = "";
+            do
+            {
+                command = inp.next();
+            }while (!command.equals("y") || !command.equals("y"));
+            if(command.equals("y"))
+            {
+                int index;
+                System.out.println("Where ? Input the Index - ");
+                index = inp.nextInt();
+                if(((Street) game_board[index]).getOwner() == player_list[turn-1] && ((Street) game_board[index]).getSet() == true)
+                {
+                    System.out.println("You built an house");
+                    ((Street) game_board[index]).AddHouse(1);
+                }
+            }
+
+        }
+
     }
     protected void Feedback()
     {
         allSet();
+        addHouse();
         System.out.println(player_list[turn-1].getPlayerName() + " your budget is - " + player_list[turn-1].getPlayer_budget());
         System.out.println(player_list[turn-1].getPlayerName() + " you are on - " + game_board[player_list[turn-1].position].getName());
         if(game_board[player_list[turn-1].position] instanceof Street)
