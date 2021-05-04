@@ -353,10 +353,22 @@ public class Game extends GameBoard
             {
                 System.out.println("The Owner of this Water station is - " + ((Water) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
                 int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1));
-                System.out.println("Throwing dice again - " + player_tax);
-                System.out.println("Rent money - " + player_tax * 4);
-                player_list[turn-1].takeMoney(player_tax * 4);
-                ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax * 4);
+                if(game_board[12].isOwned() && game_board[28].isOwned() && game_board[12].getOwner().equals(game_board[28].getOwner()))
+                {
+                    System.out.println("Throwing dice again - " + player_tax);
+                    System.out.println("Rent money - " + player_tax * 10);
+                    player_list[turn-1].takeMoney(player_tax * 10);
+                    ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax * 10);
+
+                }
+                else
+                {
+                    System.out.println("Throwing dice again - " + player_tax);
+                    System.out.println("Rent money - " + player_tax * 4);
+                    player_list[turn-1].takeMoney(player_tax * 4);
+                    ((Water) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax * 4);
+                }
+
             }
         }
         if(game_board[player_list[turn-1].position] instanceof Electricity)
@@ -385,10 +397,22 @@ public class Game extends GameBoard
             {
                 System.out.println("The Owner of this Electricity station is - " + ((Electricity) game_board[player_list[turn - 1].position]).getOwner().getPlayerName());
                 int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1));
-                System.out.println("Throwing dice again - " + player_tax);
-                System.out.println("Rent money - " + player_tax * 4);
-                player_list[turn-1].takeMoney(player_tax * 4);
-                ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax * 4);
+                if(game_board[12].isOwned() && game_board[28].isOwned() && game_board[12].getOwner().equals(game_board[28].getOwner()))
+                {
+                    System.out.println("Throwing dice again - " + player_tax);
+                    System.out.println("Rent money - " + player_tax * 10);
+                    player_list[turn-1].takeMoney(player_tax * 10);
+                    ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax * 10);
+
+                }
+                else
+                {
+                    System.out.println("Throwing dice again - " + player_tax);
+                    System.out.println("Rent money - " + player_tax * 4);
+                    player_list[turn-1].takeMoney(player_tax * 4);
+                    ((Electricity) game_board[player_list[turn - 1].position]).getOwner().giveMoney(player_tax * 4);
+                }
+
             }
         }
         if(game_board[player_list[turn-1].position].getName().equals("Chance"))
