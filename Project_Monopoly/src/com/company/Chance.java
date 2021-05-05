@@ -49,4 +49,7 @@ public class Chance extends GameBoard
     protected void getText() {
         System.out.println(text);
     }
+    protected ActionType getActionTypet() {
+        return action;
+    }
 }

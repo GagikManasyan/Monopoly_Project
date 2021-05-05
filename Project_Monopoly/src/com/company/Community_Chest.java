@@ -46,4 +46,7 @@ public class Community_Chest extends GameBoard {
     protected void getText() {
         System.out.println(text);
     }
+    protected ActionType getActionTypet() {
+        return action;
+    }
 }
