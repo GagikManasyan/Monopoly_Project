@@ -297,6 +297,7 @@ public class Game extends GameBoard
                     {
                         player.takeMoney(((Train) game_board[player.position]).getPrice());
                         ((Train) game_board[player.position]).Own(player, true);
+                        player.buyTrain();
                         System.out.println("Congratulations " + player.getPlayerName() + " you bought a station");
                     }
                     else
@@ -308,9 +309,28 @@ public class Game extends GameBoard
             else if (((Train) game_board[player.position]).getOwner() != player)
             {
                 System.out.println("The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName());
-                player.takeMoney(((Train) game_board[player.position]).getRentPrice());
-                System.out.println("Giving rent money to the owner");
-                ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice());
+                if(game_board[player.position].getOwner().getHasTrains() == 1)
+                {
+                    player.takeMoney(((Train) game_board[player.position]).getRentPrice());
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice());
+                }
+                else if (game_board[player.position].getOwner().getHasTrains() == 2){
+                    player.takeMoney(((Train) game_board[player.position]).getRentPrice()*2);
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*2);
+                }
+                else if (game_board[player.position].getOwner().getHasTrains() == 3){
+                    player.takeMoney(((Train) game_board[player.position]).getRentPrice()*4);
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*4);
+                }
+                else {
+                    player.takeMoney(((Train) game_board[player.position]).getRentPrice()*6);
+                    System.out.println("Giving rent money to the owner");
+                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*6);
+                }
+
             }
         }
         if(game_board[player.position] instanceof Water)
