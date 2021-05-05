@@ -2,14 +2,14 @@ package com.company;
 
 public abstract class GameBoard
 {
-    Square [] game_board = new Square[40];
+    protected Square [] game_board = new Square[40];
     protected GameBoard()
     {
         game_board[0] = new Square("Go");
         game_board[1] = new Street("Mediterranean Avenue", 60, 2, 50, 10,30,90,160, 250);
         game_board[2] = new Square("Chest");
         game_board[3] = new Street("Baltic Avenue", 60, 4, 50,20, 60, 180, 320, 450);
-        game_board[4] = new Square("Tax");
+        game_board[4] = new Square("Income Tax");
         game_board[5] = new Train("Train 1", 200, 25);
         game_board[6] = new Street("Oriental Avenue", 100, 6, 50,30, 90, 270, 400, 550);
         game_board[7] = new Square("Chance");
@@ -43,7 +43,8 @@ public abstract class GameBoard
         game_board[35] = new Train("Train 4", 200, 25);
         game_board[36] = new Square("Chance");
         game_board[37] = new Street("Park Place", 350, 35, 200,175, 500, 1100, 1300, 1500);
-        game_board[38] = new Square ("Luxury");
+        game_board[38] = new Square ("Luxury Tax");
         game_board[39] = new Street("Boardwalk", 400, 50, 200,200, 600, 1400, 1700, 2000);
     }
+
 }

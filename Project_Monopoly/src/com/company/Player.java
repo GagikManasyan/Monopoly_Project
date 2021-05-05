@@ -70,4 +70,8 @@ public class Player
     protected boolean getHas4Houses() {
         return has4Houses;
     }
+
+    public boolean OutOfJailCard() {
+        return outOfJailCard;
+    }
 }

@@ -1,8 +1,10 @@
 package com.company;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 
-public class GameWindow {
-
+public class GameWindow extends GameBoard
+{
     private static int turn = -1;
     private static void taketurns(int player_count)
     {
@@ -19,7 +21,6 @@ public class GameWindow {
     private static Scanner inp = new Scanner(System.in);
     public static void main(String[] args)
     {
-
         System.out.print("Write number of players. Min 2, Max 4 - ");
         int player_count = inp.nextInt();
         Player [] players = new Player[player_count];
@@ -61,6 +62,7 @@ public class GameWindow {
             players[3] = new Player(name4);
         }
         Game game = new Game();
+        game.ShuffleCards();
         do
         {
             taketurns(player_count);
@@ -108,15 +110,7 @@ public class GameWindow {
 
 
 
-        /*Game game = new Game("a","b","c","d");
-        int c = 0;
-        *//*game.Shuffle();*//*
-        do
-        {
-            c = c+1;
-            game.Move();
-        }
-        while(c < 100);*/
+
 
 
     }

@@ -26,22 +26,23 @@ public class Game extends GameBoard
         chest_cards[13] = new Community_Chest("You are assessed for street repair. $40 per house. $115 per hotel",ActionType.PayForEachHotel, 115);
         chest_cards[14] = new Community_Chest( "You have won second prize in a beauty contest. Collect $10",ActionType.GiveMoney,10);
         chest_cards[15] = new Community_Chest( "You inherit $100",ActionType.GiveMoney,100);
+
         chance_cards[0] = new Chance("Advance to Go (Collect $200)",ActionType.MoveToGo, 0);
         chance_cards[1] = new Chance("Advance to Illinois Ave—If you pass Go, collect $200", ActionType.Move, 24);
         chance_cards[2] = new Chance("Advance to St. Charles Place – If you pass Go, collect $200", ActionType.Move, 11);
-        chance_cards[3] = new Chance("Advance to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown.", ActionType.MoveToClosestUtil, 0);
-        chance_cards[4] = new Chance("Advance to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.", ActionType.MoveToClosestRailRoad, 0);
-        chance_cards[5] = new Chance("Bank pays you dividend of $50", ActionType.GiveMoney, 50);
-        chance_cards[6] = new Chance("Get Out of Jail Free", ActionType.Jailcard, 0);
-        chance_cards[7] = new Chance("Go Back 3 Spaces", ActionType.MoveBack, 3);
-        chance_cards[8] = new Chance("Go to Jail–Go directly to Jail–Do not pass Go, do not collect $200", ActionType.Move, 30);
-        chance_cards[9] = new Chance("Make general repairs on all your property–For each house pay $25–For each hotel $100", ActionType.PayForEachHotel, 100);
-        chance_cards[10] = new Chance("Pay poor tax of $15", ActionType.TakeMoney, 15);
-        chance_cards[11] = new Chance("Take a trip to Reading Railroad–If you pass Go, collect $200", ActionType.Move, 5);
-        chance_cards[12] = new Chance("Take a walk on the Boardwalk–Advance token to Boardwalk", ActionType.Move, 39);
-        chance_cards[13] = new Chance("Pay each player $50", ActionType.TakeMoney, 50);
-        chance_cards[14] = new Chance("Collect $150", ActionType.GiveMoney, 150);
-        chance_cards[15] = new Chance("Collect $100", ActionType.GiveMoney, 100);
+        chance_cards[3] = new Chance("Bank pays you dividend of $50", ActionType.GiveMoney, 50);
+        chance_cards[4] = new Chance("Get Out of Jail Free", ActionType.Jailcard, 0);
+        chance_cards[5] = new Chance("Go Back 3 Spaces", ActionType.MoveBack, 3);
+        chance_cards[6] = new Chance("Go to Jail–Go directly to Jail–Do not pass Go, do not collect $200", ActionType.Move, 30);
+        chance_cards[7] = new Chance("Make general repairs on all your property–For each house pay $25–For each hotel $100", ActionType.PayForEachHotel, 100);
+        chance_cards[8] = new Chance("Pay poor tax of $15", ActionType.TakeMoney, 15);
+        chance_cards[9] = new Chance("Take a trip to Reading Railroad–If you pass Go, collect $200", ActionType.Move, 5);
+        chance_cards[10] = new Chance("Take a walk on the Boardwalk–Advance token to Boardwalk", ActionType.Move, 39);
+        chance_cards[11] = new Chance("Pay each player $50", ActionType.TakeMoney, 50);
+        chance_cards[12] = new Chance("Collect $150", ActionType.GiveMoney, 150);
+        chance_cards[13] = new Chance("Collect $100", ActionType.GiveMoney, 100);
+        chance_cards[14] = new Chance("Pay $200", ActionType.TakeMoney, 200);
+        chance_cards[15] = new Chance("Pay $100", ActionType.TakeMoney, 100);
     }
     protected int diceRoll()
     {
@@ -65,32 +66,14 @@ public class Game extends GameBoard
             chest_count = 0;
         }
     }
-    protected void Move(Player player, int dice_roll)
+    protected void ShuffleCards ()
     {
-
-        int jaildayscount = 0;
-        if(player.isInJail() == true)
-        {
-            System.out.println(player.getPlayerName() + " you are in Jail");
-            jaildayscount = jaildayscount + 1;
-            if(jaildayscount == 1)
-            {
-                player.FreeJail();
-            }
-        }
-        else
-        {
-            int c = game_board.length - player.position;
-            player.position += dice_roll;
-            if(player.position > 39)
-            {
-                player.giveMoney(200);
-                player.position = 0;
-                player.position += dice_roll - c;
-
-            }
-        }
-
+        List<Chance> chance_cards_sh = Arrays.asList(chance_cards);
+        Collections.shuffle(chance_cards_sh);
+        this.chance_cards = chance_cards_sh.toArray(new Chance[chance_cards_sh.size()]);
+        List<Community_Chest> chest_cards_sh = Arrays.asList(chest_cards);
+        Collections.shuffle(chest_cards_sh);
+        this.chest_cards = chest_cards_sh.toArray(new Community_Chest[chest_cards_sh.size()]);
     }
     protected void allSet ()
     {
@@ -211,6 +194,56 @@ public class Game extends GameBoard
                System.out.println("You don't have 4 houses here !");
            }
        }
+    }
+    protected void Move(Player player, int dice_roll)
+    {
+
+        int jaildayscount = 0;
+        if(player.isInJail() == true)
+        {
+            if(player.OutOfJailCard() == true)
+            {
+                System.out.print(player.getPlayerName() + " you have a jailfree card do you want to use it it ? y|n : ");
+                char command = inp.next().charAt(0);
+                if(command == 'y')
+                {
+                    player.FreeJail();
+                    Move(player, dice_roll);
+                }
+                else
+                {
+                    System.out.println(player.getPlayerName() + " you are in Jail");
+                    jaildayscount = jaildayscount + 1;
+                    if(jaildayscount == 1)
+                    {
+                        player.FreeJail();
+                    }
+                }
+            }
+            else
+            {
+                System.out.println(player.getPlayerName() + " you are in Jail");
+                jaildayscount = jaildayscount + 1;
+                if(jaildayscount == 1)
+                {
+                    player.FreeJail();
+                }
+            }
+
+        }
+        else
+        {
+            int c = game_board.length - player.position;
+            player.position += dice_roll;
+            if(player.position > 39)
+            {
+                player.giveMoney(200);
+                player.position = 0;
+                player.position += dice_roll - c;
+
+            }
+        }
+
     }
     protected void Feedback(Player player)
     {
@@ -389,6 +422,16 @@ public class Game extends GameBoard
             {
                 Feedback(player);
             }
+        }
+        if(game_board[player.position].getName().equals("Income Tax"))
+        {
+            System.out.println("Income Tax. Taking 200 from the player");
+            player.takeMoney(200);
+        }
+        if(game_board[player.position].getName().equals("Luxury Tax"))
+        {
+            System.out.println("Luxury Tax. Taking 100 from the player");
+            player.takeMoney(100);
         }
         if(player.position == 30)
         {

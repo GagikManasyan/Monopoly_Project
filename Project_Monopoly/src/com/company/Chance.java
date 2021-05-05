@@ -1,6 +1,6 @@
 package com.company;
 enum ActionType {
-    TakeMoney, GiveMoney, Move, Jailcard, MoveToGo, MoveToClosestRailRoad, MoveToClosestUtil, MoveBack, PayForEachHotel;
+    TakeMoney, GiveMoney, Move, Jailcard, MoveToGo, MoveBack, PayForEachHotel;
 }
 public class Chance extends GameBoard
 {
