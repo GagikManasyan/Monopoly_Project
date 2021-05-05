@@ -9,6 +9,7 @@ public class Player
     private boolean inJail = false;
     private boolean hasSet = false;
     private boolean has4Houses = false;
+    private int hasTrains = 0;
     protected Player(String name)
     {
         this.player_budget = 1500;
@@ -73,5 +74,12 @@ public class Player
 
     public boolean OutOfJailCard() {
         return outOfJailCard;
+    }
+    protected void buyTrain()
+    {
+        hasTrains += 1;
+    }
+    protected int getHasTrains() {
+        return hasTrains;
     }
 }
