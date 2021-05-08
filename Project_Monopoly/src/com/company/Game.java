@@ -1,20 +1,20 @@
 package com.company;
+import javax.swing.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 public class Game extends GameBoard
 {
-    private static Scanner inp = new Scanner(System.in);
     private static int chance_count = -1;
     private static int chest_count = -1;
     private Chance [] chance_cards = new Chance[16];
     private Community_Chest [] chest_cards = new Community_Chest[16];
-    protected Game ()
+    protected Game (Player player)
     {
         chest_cards[0] = new Community_Chest("Advance to Go. (Collect $200)",ActionType.MoveToGo, 0 );
         chest_cards[1] = new Community_Chest("Bank error in your favor. Collect $200",ActionType.GiveMoney, 200);
         chest_cards[2] = new Community_Chest("Doctor’s fee. Pay $50",ActionType.TakeMoney, 50);
         chest_cards[3] = new Community_Chest("From sale of stock you get $50",ActionType.GiveMoney , 50);
-        chest_cards[4] = new Community_Chest("Get Out of Jail Free",ActionType.Jailcard,0);
+        chest_cards[4] = new Community_Chest("Get Out of Jail card",ActionType.Jailcard,0);
         chest_cards[5] = new Community_Chest("Go to Jail. Go directly to jail, do not pass Go, do not collect $200",ActionType.Move , 30);
         chest_cards[6] = new Community_Chest("Holiday fund matures. Receive $100",ActionType.GiveMoney, 100);
         chest_cards[7] = new Community_Chest("Income tax refund. Collect $20",ActionType.GiveMoney, 20);
@@ -38,11 +38,15 @@ public class Game extends GameBoard
         chance_cards[8] = new Chance("Pay poor tax of $15", ActionType.TakeMoney, 15);
         chance_cards[9] = new Chance("Take a trip to Reading Railroad–If you pass Go, collect $200", ActionType.Move, 5);
         chance_cards[10] = new Chance("Take a walk on the Boardwalk–Advance token to Boardwalk", ActionType.Move, 39);
-        chance_cards[11] = new Chance("Pay each player $50", ActionType.TakeMoney, 50);
+        chance_cards[11] = new Chance("Pay $50", ActionType.TakeMoney, 50);
         chance_cards[12] = new Chance("Collect $150", ActionType.GiveMoney, 150);
         chance_cards[13] = new Chance("Collect $100", ActionType.GiveMoney, 100);
         chance_cards[14] = new Chance("Pay $200", ActionType.TakeMoney, 200);
         chance_cards[15] = new Chance("Pay $100", ActionType.TakeMoney, 100);
+
+        ((Street) game_board[1]).Own(player, true);
+        ((Street) game_board[3]).Own(player, true);
+
     }
     protected int diceRoll()
     {
@@ -148,317 +152,549 @@ public class Game extends GameBoard
             }
         }
     }
+    protected void Sell(Player player)
+    {
+        String info = "Your Properties" + "\n";
+        for (int i = 0; i < game_board.length; i++)
+        {
+            if(game_board[i].isOwned() == true && game_board[i].getOwner().equals(player))
+            {
+                info += game_board[i].getName() + "\n";
+            }
+
+        }
+        String propertyname = JOptionPane.showInputDialog(null,info,"Sell",JOptionPane.PLAIN_MESSAGE);
+        if(propertyname != null)
+        {
+            for (int i = 0; i < game_board.length; i++)
+            {
+                if(game_board[i].getName().equals(propertyname))
+                {
+                    if(game_board[i] instanceof Street)
+                    {
+                        ((Street) game_board[i]).Sell();
+                        ((Street) game_board[i]).isSet(false,player);
+                        player.giveMoney(((Street) game_board[i]).getPrice() + ((Street) game_board[i]).getHouse_count() * ((Street) game_board[i]).getHousePrice() + ((Street) game_board[i]).getHotelPrice());
+                    }
+                    if(game_board[i] instanceof Train)
+                    {
+                        ((Train) game_board[i]).Sell();
+                        player.giveMoney(((Train) game_board[i]).getPrice());
+                    }
+                    if(game_board[i] instanceof Water)
+                    {
+                        ((Water) game_board[i]).Sell();
+                        player.giveMoney(((Water) game_board[i]).getPrice());
+                    }
+                    if(game_board[i] instanceof Electricity)
+                    {
+                        ((Electricity) game_board[i]).Sell();
+                        player.giveMoney(((Electricity) game_board[i]).getPrice());
+                    }
+                }
+            }
+        }
+
+    }
     protected void addHouse (Player player)
     {
-        int index;
-        System.out.print("Where ? Input the Index : ");
-        index = inp.nextInt();
-        if(((Street) game_board[index]).getOwner() == player && ((Street) game_board[index]).getSet() == true)
-        {
-            int house;
-            do
-            {
-                System.out.println("Note you cannot build more than 4 houses");
-                System.out.print("How many :");
-                house = inp.nextInt();
 
-            }while(house > 4);
-            if(player.getPlayer_budget() < (((Street) game_board[index]).getHousePrice()) * house)
+        String info = "Your Streets: \n";
+        if(game_board[1].isOwned() == true && game_board[3].isOwned() == true && game_board[1].getOwner().equals(player) && ((Street) game_board[1]).getSet() == true)
+        {
+            String str = game_board[1].getName();
+            info += str + " " + game_board[3].getName() + "\n";
+        }
+        if(game_board[6].isOwned() == true && game_board[8].isOwned() == true && game_board[9].isOwned() == true && game_board[6].getOwner().equals(player) && ((Street) game_board[6]).getSet() == true)
+        {
+            info += game_board[6].getName()   + " " + game_board[8].getName() + " " + game_board[9] + "\n";
+        }
+        if(game_board[11].isOwned() == true && game_board[13].isOwned() == true && game_board[14].isOwned() == true && game_board[11].getOwner().equals(player) && ((Street) game_board[11]).getSet() == true)
+        {
+            info += game_board[11].getName()   + " " + game_board[13].getName() + " " + game_board[14] + "\n";
+        }
+        if(game_board[16].isOwned() == true && game_board[18].isOwned() == true && game_board[19].isOwned() == true && game_board[16].getOwner().equals(player) && ((Street) game_board[16]).getSet() == true)
+        {
+            info += game_board[16].getName()   + " " + game_board[18].getName() + " " + game_board[19] + "\n";
+        }
+        if(game_board[21].isOwned() == true && game_board[23].isOwned() == true && game_board[24].isOwned() == true && game_board[21].getOwner().equals(player) && ((Street) game_board[21]).getSet() == true)
+        {
+            info += game_board[21].getName()   + " " + game_board[23].getName() + " " + game_board[24] + "\n";
+        }
+        if(game_board[26].isOwned() == true && game_board[27].isOwned() == true && game_board[29].isOwned() == true && game_board[26].getOwner().equals(player) && ((Street) game_board[26]).getSet() == true)
+        {
+            info += game_board[26].getName()   + " " + game_board[27].getName() + " " + game_board[29] + "\n";
+        }
+        if(game_board[31].isOwned() == true && game_board[32].isOwned() == true && game_board[34].isOwned() == true && game_board[31].getOwner().equals(player) && ((Street) game_board[31]).getSet() == true)
+        {
+            info += game_board[31].getName()   + " " + game_board[32].getName() + " " + game_board[34] + "\n";
+        }
+        if(game_board[37].isOwned() == true && game_board[39].isOwned() == true && game_board[37].getOwner().equals(player) && ((Street) game_board[37]).getSet() == true)
+        {
+            info += game_board[37].getName()   + " " + game_board[39].getName() + "\n";
+        }
+        String streetname = JOptionPane.showInputDialog(null,info,"SelectStreet",JOptionPane.PLAIN_MESSAGE);
+        Street street = FindStreet(streetname);
+        if(street != null)
+        {
+            if(street.getHouse_count() == 4 || street.getHotel_count() == 1)
             {
-                System.out.println("Not enough money !");
+                JOptionPane.showMessageDialog(null,"this Street is full ! ");
             }
             else
             {
-                ((Street) game_board[index]).AddHouse(1);
-                System.out.println("You built an house");
+                String number = JOptionPane.showInputDialog(null, "How Many houses do you wish to build ?","BuildHouse",JOptionPane.PLAIN_MESSAGE);
+                int n = Integer.parseInt(number);
+                if(street.getHouse_count() + n > 4)
+                {
+                    JOptionPane.showMessageDialog(null,"You cannot have more than 4 houses ! ");
+                }
+                else
+                {
+                    street.AddHouse(n,player);
+                    player.takeMoney(street.getHousePrice() * n);
+                    JOptionPane.showMessageDialog(null,"Congratulations you bought a house on " + street.getName());
+                }
             }
-
         }
     }
     protected void addHotel (Player player)
     {
-       int index;
-       System.out.print("Where ? Input the Index of a street where you have 4 houses : ");
-       index = inp.nextInt();
-       if(((Street) game_board[index]).getOwner() == player && ((Street) game_board[index]).getSet() == true)
-       {
-           if(((Street) game_board[index]).getHouse_count() == 4)
-           {
-               System.out.println(((Street) game_board[index]).getHouse_count());
-               ((Street) game_board[index]).AddHotel();
-               System.out.println("You built an hotel on " + game_board[index].getName());
-           }
-           else
-           {
-               System.out.println(((Street) game_board[index]).getHouse_count());
-               System.out.println("You don't have 4 houses here !");
-           }
-       }
+        String info = "Your Streets: \n";
+        if(game_board[1].isOwned() == true && game_board[3].isOwned() == true && game_board[1].getOwner().equals(player) && ((Street) game_board[1]).getSet() == true)
+        {
+            String str = game_board[1].getName();
+            info += str + " " + game_board[3].getName() + "\n";
+        }
+        if(game_board[6].isOwned() == true && game_board[8].isOwned() == true && game_board[9].isOwned() == true && game_board[6].getOwner().equals(player) && ((Street) game_board[6]).getSet() == true)
+        {
+            info += game_board[6].getName()   + " " + game_board[8].getName() + " " + game_board[9] + "\n";
+        }
+        if(game_board[11].isOwned() == true && game_board[13].isOwned() == true && game_board[14].isOwned() == true && game_board[11].getOwner().equals(player) && ((Street) game_board[11]).getSet() == true)
+        {
+            info += game_board[11].getName()   + " " + game_board[13].getName() + " " + game_board[14] + "\n";
+        }
+        if(game_board[16].isOwned() == true && game_board[18].isOwned() == true && game_board[19].isOwned() == true && game_board[16].getOwner().equals(player) && ((Street) game_board[16]).getSet() == true)
+        {
+            info += game_board[16].getName()   + " " + game_board[18].getName() + " " + game_board[19] + "\n";
+        }
+        if(game_board[21].isOwned() == true && game_board[23].isOwned() == true && game_board[24].isOwned() == true && game_board[21].getOwner().equals(player) && ((Street) game_board[21]).getSet() == true)
+        {
+            info += game_board[21].getName()   + " " + game_board[23].getName() + " " + game_board[24] + "\n";
+        }
+        if(game_board[26].isOwned() == true && game_board[27].isOwned() == true && game_board[29].isOwned() == true && game_board[26].getOwner().equals(player) && ((Street) game_board[26]).getSet() == true)
+        {
+            info += game_board[26].getName()   + " " + game_board[27].getName() + " " + game_board[29] + "\n";
+        }
+        if(game_board[31].isOwned() == true && game_board[32].isOwned() == true && game_board[34].isOwned() == true && game_board[31].getOwner().equals(player) && ((Street) game_board[31]).getSet() == true)
+        {
+            info += game_board[31].getName()   + " " + game_board[32].getName() + " " + game_board[34] + "\n";
+        }
+        if(game_board[37].isOwned() == true && game_board[39].isOwned() == true && game_board[37].getOwner().equals(player) && ((Street) game_board[37]).getSet() == true)
+        {
+            info += game_board[37].getName()   + " " + game_board[39].getName() + "\n";
+        }
+        String streetname = JOptionPane.showInputDialog(null,info,"SelectStreet",JOptionPane.PLAIN_MESSAGE);
+        Street street = FindStreet(streetname);
+        if(street != null)
+        {
+            if(street.getHouse_count() == 1)
+            {
+                JOptionPane.showMessageDialog(null,"this Street is full ! ");
+            }
+            else
+            {
+                street.AddHotel(player);
+                player.takeMoney(street.getHotelPrice());
+                JOptionPane.showMessageDialog(null,"Congratulations you bought a hotel on " + street.getName());
+                }
+            }
+        }
+    protected Street FindStreet (String name)
+    {
+        if(game_board[1].getName().equals(name))
+        {
+            return ((Street) game_board[1]);
+        }
+        if(game_board[3].getName().equals(name))
+        {
+            return ((Street) game_board[3]);
+        }
+        if(game_board[6].getName().equals(name))
+        {
+            return ((Street) game_board[6]);
+        }
+        if(game_board[8].getName().equals(name))
+        {
+            return ((Street) game_board[8]);
+        }
+        if(game_board[9].getName().equals(name))
+        {
+            return ((Street) game_board[9]);
+        }
+        if(game_board[11].getName().equals(name))
+        {
+            return ((Street) game_board[11]);
+        }
+        if(game_board[13].getName().equals(name))
+        {
+            return ((Street) game_board[13]);
+        }
+        if(game_board[14].getName().equals(name))
+        {
+            return ((Street) game_board[14]);
+        }
+        if(game_board[16].getName().equals(name))
+        {
+            return ((Street) game_board[16]);
+        }
+        if(game_board[18].getName().equals(name))
+        {
+            return ((Street) game_board[18]);
+        }
+        if(game_board[19].getName().equals(name))
+        {
+            return ((Street) game_board[19]);
+        }
+        if(game_board[21].getName().equals(name))
+        {
+            return ((Street) game_board[21]);
+        }
+        if(game_board[23].getName().equals(name))
+        {
+            return ((Street) game_board[23]);
+        }
+        if(game_board[24].getName().equals(name))
+        {
+            return ((Street) game_board[24]);
+        }
+        if(game_board[26].getName().equals(name))
+        {
+            return ((Street) game_board[26]);
+        }
+        if(game_board[27].getName().equals(name))
+        {
+            return ((Street) game_board[27]);
+        }
+        if(game_board[29].getName().equals(name))
+        {
+            return ((Street) game_board[29]);
+        }
+        if(game_board[31].getName().equals(name))
+        {
+            return ((Street) game_board[31]);
+        }
+        if(game_board[32].getName().equals(name))
+        {
+            return ((Street) game_board[32]);
+        }
+        if(game_board[34].getName().equals(name))
+        {
+            return ((Street) game_board[34]);
+        }
+        if(game_board[37].getName().equals(name))
+        {
+            return ((Street) game_board[37]);
+        }
+        if(game_board[39].getName().equals(name))
+        {
+            return ((Street) game_board[39]);
+        }
+        return null;
     }
+
+
     protected void Move(Player player, int dice_roll)
     {
 
         int jaildayscount = 0;
-        if(player.isInJail() == true)
+        if(player.getPlayer_budget() <= 0)
         {
-            if(player.OutOfJailCard() == true)
+            JOptionPane.showMessageDialog(null,player.getPlayerName() + "You are bankrupt.");
+        }
+        else
+        {
+            if(player.isInJail() == true)
             {
-                System.out.print(player.getPlayerName() + " you have a jailfree card do you want to use it it ? y|n : ");
-                char command = inp.next().charAt(0);
-                if(command == 'y')
+                if(player.OutOfJailCard() == true)
                 {
-                    player.FreeJail();
-                    Move(player, dice_roll);
+                    int command = JOptionPane.showConfirmDialog(null,"you have FreeJailCard do you wish to use it ?");
+                    if(command == 0)
+                    {
+                        JOptionPane.showMessageDialog(null,"You are free !!");
+                        player.FreeJail();
+                        Move(player, dice_roll);
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null,"You are in Jail.");
+                        jaildayscount = jaildayscount + 1;
+                        if(jaildayscount == 1)
+                        {
+                            player.FreeJail();
+                        }
+                    }
                 }
                 else
                 {
-                    System.out.println(player.getPlayerName() + " you are in Jail");
+                    JOptionPane.showMessageDialog(null,"You are in Jail.");
                     jaildayscount = jaildayscount + 1;
                     if(jaildayscount == 1)
                     {
                         player.FreeJail();
                     }
                 }
+
             }
             else
             {
-                System.out.println(player.getPlayerName() + " you are in Jail");
-                jaildayscount = jaildayscount + 1;
-                if(jaildayscount == 1)
+                int c = game_board.length - player.position;
+                player.position += dice_roll;
+                if(player.position > 39)
                 {
-                    player.FreeJail();
+                    player.giveMoney(200);
+                    player.position = 0;
+                    player.position += dice_roll - c;
+
                 }
             }
-
         }
-        else
-        {
-            int c = game_board.length - player.position;
-            player.position += dice_roll;
-            if(player.position > 39)
-            {
-                player.giveMoney(200);
-                player.position = 0;
-                player.position += dice_roll - c;
 
-            }
-        }
 
     }
     protected void Feedback(Player player)
     {
-        System.out.println(player.getPlayerName() + " your budget is - " + player.getPlayer_budget());
-        System.out.println(player.getPlayerName() + " you are on - " + game_board[player.position].getName());
-        if(game_board[player.position] instanceof Street)
+        ShuffleCards();
+        if(player.getPlayer_budget() <= 0)
         {
 
-            if(((Street) game_board[player.position]).isOwned() == false)
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "You are on : " + game_board[player.position].getName());
+            if(game_board[player.position] instanceof Street)
             {
-                System.out.println("Price is - " + ((Street) game_board[player.position]).getPrice());
-                System.out.print(player.getPlayerName() + " do you wish to buy this street ? |y,n| - ");
-                char input;
-                input = inp.next().charAt(0);
-                if(input == 'y')
+
+                if(((Street) game_board[player.position]).isOwned() == false)
                 {
-                    if(player.getPlayer_budget() > ((Street) game_board[player.position]).getPrice())
+                    int n = JOptionPane.showConfirmDialog(null,"Your budget is - " + player.getPlayer_budget() + "\n"
+                            + "Price is - " +  ((Street) game_board[player.position]).getPrice()
+                            + "\n" + "Do you wish to buy this Street ? ");
+                    if(n == 0)
                     {
-                        player.takeMoney(((Street) game_board[player.position]).getPrice());
-                        ((Street) game_board[player.position]).Own(player, true);
-                        System.out.println("Congratulations " + player.getPlayerName() + " you bought a property");
+                        if(player.getPlayer_budget() > ((Street) game_board[player.position]).getPrice())
+                        {
+                            player.takeMoney(((Street) game_board[player.position]).getPrice());
+                            ((Street) game_board[player.position]).Own(player, true);
+                            JOptionPane.showMessageDialog(null,"Congratulations " + player.getPlayerName() + " you bought a property");
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"You don't have enough money !!!");
+                        }
+
+                    }
+                }
+                else if (((Street) game_board[player.position]).getOwner() != player)
+                {
+                    player.takeMoney(((Street) game_board[player.position]).getRentPrice());
+                    ((Street) game_board[player.position]).getOwner().giveMoney(((Street) game_board[player.position]).getRentPrice());
+                    JOptionPane.showMessageDialog(null,"The Owner of this property is - " + ((Street) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                            + "Rent - " + ((Street) game_board[player.position]).getRentPrice() + "\n"
+                            + "Giving money to the owner");
+                }
+
+            }
+            if(game_board[player.position] instanceof Train)
+            {
+                if(((Train) game_board[player.position]).isOwned() == false)
+                {
+                    int n = JOptionPane.showConfirmDialog(null,"Your budget is - " + player.getPlayer_budget() + "\n"
+                            + "Price is - " +  ((Train) game_board[player.position]).getPrice()
+                            + "\n" + "Do you wish to buy this Train Station ? ");
+                    if(n == 0)
+                    {
+                        if(player.getPlayer_budget() > ((Train) game_board[player.position]).getPrice())
+                        {
+                            player.takeMoney(((Train) game_board[player.position]).getPrice());
+                            ((Train) game_board[player.position]).Own(player, true);
+                            player.buyTrain();
+                            JOptionPane.showMessageDialog(null,"Congratulations " + player.getPlayerName() + " you bought a property");
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"you don't have enough money !!!");
+                        }
+                    }
+                }
+                else if (((Train) game_board[player.position]).getOwner() != player)
+                {
+                    System.out.println("The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName());
+                    if(game_board[player.position].getOwner().getHasTrains() == 1)
+                    {
+                        JOptionPane.showMessageDialog(null,"The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Rent - " + ((Train) game_board[player.position]).getRentPrice() + "\n"
+                                + "Giving money to the owner");
+                        player.takeMoney(((Train) game_board[player.position]).getRentPrice());
+                        ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice());
+                    }
+                    else if (game_board[player.position].getOwner().getHasTrains() == 2){
+
+                        JOptionPane.showMessageDialog(null,"The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Rent - " + ((Train) game_board[player.position]).getRentPrice()*2 + "\n"
+                                + "Giving money to the owner");
+                        player.takeMoney(((Train) game_board[player.position]).getRentPrice()*2);
+                        ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*2);
+                    }
+                    else if (game_board[player.position].getOwner().getHasTrains() == 3){
+                        JOptionPane.showMessageDialog(null,"The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Rent - " + ((Train) game_board[player.position]).getRentPrice()*4 + "\n"
+                                + "Giving money to the owner");
+                        player.takeMoney(((Train) game_board[player.position]).getRentPrice()*4);
+                        ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*4);
+                    }
+                    else if (game_board[player.position].getOwner().getHasTrains() == 4){
+                        JOptionPane.showMessageDialog(null,"The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Rent - " + ((Train) game_board[player.position]).getRentPrice()*6 + "\n"
+                                + "Giving money to the owner");
+                        player.takeMoney(((Train) game_board[player.position]).getRentPrice()*6);
+                        ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*6);
+                    }
+
+                }
+            }
+            if(game_board[player.position] instanceof Water)
+            {
+                if(((Water) game_board[player.position]).isOwned() == false)
+                {
+                    int n = JOptionPane.showConfirmDialog(null,"Your budget is - " + player.getPlayer_budget() + "\n"
+                            + "Price is - " +  ((Water) game_board[player.position]).getPrice()
+                            + "\n" + "Do you wish to buy this Utility ? ");
+                    if(n == 0)
+                    {
+                        if(player.getPlayer_budget() > ((Water) game_board[player.position]).getPrice())
+                        {
+                            player.takeMoney(((Water) game_board[player.position]).getPrice());
+                            ((Water) game_board[player.position]).Own(player, true);
+                            JOptionPane.showMessageDialog(null,"Congratulations " + player.getPlayerName() + " you bought a Utility");
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"You don't have enough money !!!");
+                        }
+                    }
+                }
+                else if (((Water) game_board[player.position]).getOwner() != player)
+                {
+                    int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1));
+                    if(game_board[12].isOwned() && game_board[28].isOwned() && game_board[12].getOwner().equals(game_board[28].getOwner()))
+                    {
+                        JOptionPane.showMessageDialog(null,"The Owner of this Utility is - " + ((Water) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Throwing dice again - " + + player_tax + "\n"
+                                + "Rent money - " + player_tax * 10
+                                + "Giving money to the owner");
+                        player.takeMoney(player_tax * 10);
+                        ((Water) game_board[player.position]).getOwner().giveMoney(player_tax * 10);
                     }
                     else
                     {
-                        System.out.println("you don't have enough money !!!");
+                        JOptionPane.showMessageDialog(null,"The Owner of this Utility is - " + ((Water) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Throwing dice again - " + + player_tax + "\n"
+                                + "Rent money - " + player_tax * 4
+                                + "Giving money to the owner");
+                        player.takeMoney(player_tax * 4);
+                        ((Water) game_board[player.position]).getOwner().giveMoney(player_tax * 4);
                     }
 
                 }
             }
-            else if (((Street) game_board[player.position]).getOwner() != player)
+            if(game_board[player.position] instanceof Electricity)
             {
-                System.out.println("The Owner of this property is - " + ((Street) game_board[player.position]).getOwner().getPlayerName());
-                System.out.println("Rent - " + ((Street) game_board[player.position]).getRentPrice());
-                player.takeMoney(((Street) game_board[player.position]).getRentPrice());
-                System.out.println("Giving rent money to the owner");
-                ((Street) game_board[player.position]).getOwner().giveMoney(((Street) game_board[player.position]).getRentPrice());
-            }
-
-        }
-        if(game_board[player.position] instanceof Train)
-        {
-            if(((Train) game_board[player.position]).isOwned() == false)
-            {
-                System.out.println("Price is - " + ((Train) game_board[player.position]).getPrice());
-                System.out.print(player.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
-                char input;
-                input = inp.next().charAt(0);
-                if(input == 'y')
+                if(((Electricity) game_board[player.position]).isOwned() == false)
                 {
-                    if(player.getPlayer_budget() > ((Train) game_board[player.position]).getPrice())
+                    int n = JOptionPane.showConfirmDialog(null,"Your budget is - " + player.getPlayer_budget() + "\n"
+                            + "Price is - " +  ((Electricity) game_board[player.position]).getPrice()
+                            + "\n" + "Do you wish to buy this Utility ? ");
+                    if(n == 0)
                     {
-                        player.takeMoney(((Train) game_board[player.position]).getPrice());
-                        ((Train) game_board[player.position]).Own(player, true);
-                        player.buyTrain();
-                        System.out.println("Congratulations " + player.getPlayerName() + " you bought a station");
+                        if(player.getPlayer_budget() > ((Electricity) game_board[player.position]).getPrice())
+                        {
+                            player.takeMoney(((Electricity) game_board[player.position]).getPrice());
+                            ((Electricity) game_board[player.position]).Own(player, true);
+                            JOptionPane.showMessageDialog(null,"Congratulations " + player.getPlayerName() + "you bought Utility");
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"you don't have enough money !!!");
+                        }
+                    }
+                }
+                else if (((Electricity) game_board[player.position]).getOwner() != player)
+                {
+                    int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1));
+                    if(game_board[12].isOwned() && game_board[28].isOwned() && game_board[12].getOwner().equals(game_board[28].getOwner()))
+                    {
+                        JOptionPane.showMessageDialog(null,"The Owner of this Utility is - " + ((Electricity) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Throwing dice again - " + + player_tax + "\n"
+                                + "Rent money - " + player_tax * 10
+                                + "Giving money to the owner");
+                        player.takeMoney(player_tax * 10);
+                        ((Electricity) game_board[player.position]).getOwner().giveMoney(player_tax * 10);
                     }
                     else
                     {
-                        System.out.println("you don't have enough money !!!");
+                        JOptionPane.showMessageDialog(null,"The Owner of this Utility is - " + ((Electricity) game_board[player.position]).getOwner().getPlayerName() + "\n"
+                                + "Throwing dice again - " + + player_tax + "\n"
+                                + "Rent money - " + player_tax * 4
+                                + "Giving money to the owner");
+                        player.takeMoney(player_tax * 4);
+                        ((Electricity) game_board[player.position]).getOwner().giveMoney(player_tax * 4);
                     }
+
                 }
             }
-            else if (((Train) game_board[player.position]).getOwner() != player)
+            if(game_board[player.position].getName().equals("Chance"))
             {
-                System.out.println("The Owner of this station is - " + ((Train) game_board[player.position]).getOwner().getPlayerName());
-                if(game_board[player.position].getOwner().getHasTrains() == 1)
+                Chance_Count();
+                JOptionPane.showMessageDialog(null, chance_cards[chance_count].getText());
+                chance_cards[chance_count].doAction(player);
+                if(chance_cards[chance_count].getActionTypet().equals(ActionType.Move) || chance_cards[chance_count].getActionTypet().equals(ActionType.MoveBack))
                 {
-                    player.takeMoney(((Train) game_board[player.position]).getRentPrice());
-                    System.out.println("Giving rent money to the owner");
-                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice());
-                }
-                else if (game_board[player.position].getOwner().getHasTrains() == 2){
-                    player.takeMoney(((Train) game_board[player.position]).getRentPrice()*2);
-                    System.out.println("Giving rent money to the owner");
-                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*2);
-                }
-                else if (game_board[player.position].getOwner().getHasTrains() == 3){
-                    player.takeMoney(((Train) game_board[player.position]).getRentPrice()*4);
-                    System.out.println("Giving rent money to the owner");
-                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*4);
-                }
-                else {
-                    player.takeMoney(((Train) game_board[player.position]).getRentPrice()*6);
-                    System.out.println("Giving rent money to the owner");
-                    ((Train) game_board[player.position]).getOwner().giveMoney(((Train) game_board[player.position]).getRentPrice()*6);
+                    Feedback(player);
                 }
 
+
             }
-        }
-        if(game_board[player.position] instanceof Water)
-        {
-            if(((Water) game_board[player.position]).isOwned() == false)
+            if(game_board[player.position].getName().equals("Chest"))
             {
-                System.out.println("Price is - " + ((Water) game_board[player.position]).getPrice());
-                System.out.print(player.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
-                char input;
-                input = inp.next().charAt(0);
-                if(input == 'y')
+                Chest_Count();
+                JOptionPane.showMessageDialog(null, chest_cards[chest_count].getText());
+                chest_cards[chest_count].doAction(player);
+                if(chest_cards[chest_count].getActionTypet().equals(ActionType.Move) || chest_cards[chest_count].getActionTypet().equals(ActionType.MoveBack))
                 {
-                    if(player.getPlayer_budget() > ((Water) game_board[player.position]).getPrice())
-                    {
-                        player.takeMoney(((Water) game_board[player.position]).getPrice());
-                        ((Water) game_board[player.position]).Own(player, true);
-                        System.out.println("Congratulations " + player.getPlayerName() + " you bought Water station");
-                    }
-                    else
-                    {
-                        System.out.println("you don't have enough money !!!");
-                    }
+                    Feedback(player);
                 }
             }
-            else if (((Water) game_board[player.position]).getOwner() != player)
+            if(game_board[player.position].getName().equals("Income Tax"))
             {
-                System.out.println("The Owner of this Water station is - " + ((Water) game_board[player.position]).getOwner().getPlayerName());
-                int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1));
-                if(game_board[12].isOwned() && game_board[28].isOwned() && game_board[12].getOwner().equals(game_board[28].getOwner()))
-                {
-                    System.out.println("Throwing dice again - " + player_tax);
-                    System.out.println("Rent money - " + player_tax * 10);
-                    player.takeMoney(player_tax * 10);
-                    ((Water) game_board[player.position]).getOwner().giveMoney(player_tax * 10);
-
-                }
-                else
-                {
-                    System.out.println("Throwing dice again - " + player_tax);
-                    System.out.println("Rent money - " + player_tax * 4);
-                    player.takeMoney(player_tax * 4);
-                    ((Water) game_board[player.position]).getOwner().giveMoney(player_tax * 4);
-                }
-
+                JOptionPane.showMessageDialog(null,"Income Tax. Taking 200 from the player.");
+                player.takeMoney(200);
             }
-        }
-        if(game_board[player.position] instanceof Electricity)
-        {
-            if(((Electricity) game_board[player.position]).isOwned() == false)
+            if(game_board[player.position].getName().equals("Luxury Tax"))
             {
-                System.out.println("Price is - " + ((Electricity) game_board[player.position]).getPrice());
-                System.out.print(player.getPlayerName() + " do you wish to buy this station ? |y,n| - ");
-                char input;
-                input = inp.next().charAt(0);
-                if(input == 'y')
-                {
-                    if(player.getPlayer_budget() > ((Electricity) game_board[player.position]).getPrice())
-                    {
-                        player.takeMoney(((Electricity) game_board[player.position]).getPrice());
-                        ((Electricity) game_board[player.position]).Own(player, true);
-                        System.out.println("Congratulations " + player.getPlayerName() + " you bought Electricity station");
-                    }
-                    else
-                    {
-                        System.out.println("you don't have enough money !!!");
-                    }
-                }
+                JOptionPane.showMessageDialog(null,"Income Tax. Taking 100 from the player.");
+                player.takeMoney(100);
             }
-            else if (((Electricity) game_board[player.position]).getOwner() != player)
+            if(player.position == 30)
             {
-                System.out.println("The Owner of this Electricity station is - " + ((Electricity) game_board[player.position]).getOwner().getPlayerName());
-                int player_tax = (ThreadLocalRandom.current().nextInt(1, 6 + 1) + ThreadLocalRandom.current().nextInt(1, 6 + 1));
-                if(game_board[12].isOwned() && game_board[28].isOwned() && game_board[12].getOwner().equals(game_board[28].getOwner()))
-                {
-                    System.out.println("Throwing dice again - " + player_tax);
-                    System.out.println("Rent money - " + player_tax * 10);
-                    player.takeMoney(player_tax * 10);
-                    ((Electricity) game_board[player.position]).getOwner().giveMoney(player_tax * 10);
-
-                }
-                else
-                {
-                    System.out.println("Throwing dice again - " + player_tax);
-                    System.out.println("Rent money - " + player_tax * 4);
-                    player.takeMoney(player_tax * 4);
-                    ((Electricity) game_board[player.position]).getOwner().giveMoney(player_tax * 4);
-                }
+                JOptionPane.showMessageDialog(null,"You are going to Jail.");
+                player.goToJail();
 
             }
         }
-        if(game_board[player.position].getName().equals("Chance"))
-        {
-            Chance_Count();
-            chance_cards[chance_count].getText();
-            chance_cards[chance_count].doAction(player);
-            if(chance_cards[chance_count].getActionTypet().equals(ActionType.Move))
-            {
-                Feedback(player);
-            }
 
-
-        }
-        if(game_board[player.position].getName().equals("Chest"))
-        {
-            Chest_Count();
-            chest_cards[chest_count].getText();
-            chest_cards[chest_count].doAction(player);
-            if(chest_cards[chest_count].getActionTypet().equals(ActionType.Move))
-            {
-                Feedback(player);
-            }
-        }
-        if(game_board[player.position].getName().equals("Income Tax"))
-        {
-            System.out.println("Income Tax. Taking 200 from the player");
-            player.takeMoney(200);
-        }
-        if(game_board[player.position].getName().equals("Luxury Tax"))
-        {
-            System.out.println("Luxury Tax. Taking 100 from the player");
-            player.takeMoney(100);
-        }
-        if(player.position == 30)
-        {
-            player.goToJail();
-
-        }
 
     }
+
 
 }

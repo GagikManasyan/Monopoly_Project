@@ -37,14 +37,18 @@ public class Community_Chest extends GameBoard {
         {
             player.giveMoney(value);
         }
+        if(action.equals(ActionType.PayForEachHotel))
+        {
+            player.takeMoney(player.getHousecount() * 40 + player.getHotelcount() * value);
+        }
         if(action.equals(ActionType.Jailcard))
         {
             player.outOfJailCard(true);
         }
     }
 
-    protected void getText() {
-        System.out.println(text);
+    protected String getText() {
+        return text;
     }
     protected ActionType getActionTypet() {
         return action;

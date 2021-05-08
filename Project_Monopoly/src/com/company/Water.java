@@ -37,6 +37,11 @@ public class Water extends Square
     public int getRentPrice() {
         return rentPrice;
     }
+    protected void Sell ()
+    {
+        this.owner = null;
+        this.owned = false;
+    }
 
 
 }

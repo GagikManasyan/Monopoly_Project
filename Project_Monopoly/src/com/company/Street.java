@@ -11,7 +11,7 @@ public class Street extends Square
     private boolean owned = false;
     private boolean set = false;
     private int house_count = 0;
-    private int hotel_count = 0;
+    private int hotel_count;
     private int housePrice;
     private int hotelPrice;
     private int rentwith1house;
@@ -32,35 +32,36 @@ public class Street extends Square
         this.rentwith4house = rentwith4house;
         this.rentwithhotel = rentwithhotel;
     }
-    protected void AddHotel()
+    protected void AddHotel(Player player)
     {
-        hotel_count += 1;
-        if(hotel_count == 1)
-        {
-            rent_price = rentwithhotel;
-            house_count = 0;
-        }
+        hotel_count = 1;
+        rent_price = rentwithhotel;
+        house_count = 0;
+        player.setHotelcount(1);
 
     }
-    protected void AddHouse(int house)
+    protected void AddHouse(int house, Player player)
     {
         house_count += house;
         if(house_count == 1)
         {
             rent_price = rentwith1house;
+            player.setHousecount(1);
         }
         if(house_count == 2)
         {
             rent_price = rentwith2house;
+            player.setHousecount(2);
         }
         if(house_count == 3)
         {
             rent_price = rentwith3house;
+            player.setHousecount(3);
         }
         if(house_count == 4)
         {
             rent_price = rentwith4house;
-            getOwner().setHas4Houses(true);
+            player.setHousecount(4);
         }
     }
     protected void Own (Player player, boolean owned)
@@ -68,6 +69,11 @@ public class Street extends Square
         this.owner = player;
         this.owned = owned;
 
+    }
+    protected void Sell ()
+    {
+        this.owner = null;
+        this.owned = false;
     }
     protected String getName(){
         return name;
@@ -78,8 +84,15 @@ public class Street extends Square
     }
     protected void isSet (boolean status, Player player)
     {
-        this.set = status;
-        hasSet(player);
+        if(status == false)
+        {
+            this.set = status;
+        }
+        else
+        {
+            this.set = status;
+            hasSet(player);
+        }
     }
     protected boolean getSet ()
     {
@@ -93,11 +106,9 @@ public class Street extends Square
     {
         return this.owner;
     }
-
     protected int getPrice() {
         return price;
     }
-
     protected int getRentPrice()
     {
         if(this.set == true && this.house_count == 0 && this.hotel_count == 0)
@@ -110,8 +121,14 @@ public class Street extends Square
     {
         return this.house_count;
     }
-
     protected int getHousePrice() {
         return housePrice;
+    }
+    protected int getHotel_count ()
+    {
+        return this.hotel_count;
+    }
+    public int getHotelPrice() {
+        return hotelPrice;
     }
 }

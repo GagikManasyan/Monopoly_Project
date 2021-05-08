@@ -15,7 +15,7 @@ public abstract class GameBoard
         game_board[7] = new Square("Chance");
         game_board[8] = new Street("Vermont Avenue", 100, 6, 50,30, 90, 270, 400, 550);
         game_board[9] = new Street("Connecticut Avenue", 120, 8,50, 40, 100, 300, 450, 600);
-        game_board[10] = new Jail();
+        game_board[10] = new Square("Jail");
         game_board[11] = new Street("St Charles Place", 140, 10, 100, 50, 150, 450, 625, 750);
         game_board[12] = new Electricity("Electricity",150,12);
         game_board[13] = new Street("States Avenue", 140, 10, 100,50, 150, 450, 625, 750);

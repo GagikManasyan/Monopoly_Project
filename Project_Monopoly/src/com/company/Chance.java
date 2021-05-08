@@ -20,6 +20,14 @@ public class Chance extends GameBoard
             player.position = value;
             player.giveMoney(200);
         }
+        if(action.equals(ActionType.MoveBack))
+        {
+            player.position = player.position - value;
+            if(player.position == 0)
+            {
+                player.giveMoney(200);
+            }
+        }
         if(action.equals(ActionType.Move))
         {
             if(player.position < value)
@@ -44,10 +52,14 @@ public class Chance extends GameBoard
         {
             player.outOfJailCard(true);
         }
+        if(action.equals(ActionType.PayForEachHotel))
+        {
+            player.takeMoney(player.getHousecount() * (value / 4) + player.getHotelcount() * value);
+        }
     }
 
-    protected void getText() {
-        System.out.println(text);
+    protected String getText() {
+        return text;
     }
     protected ActionType getActionTypet() {
         return action;

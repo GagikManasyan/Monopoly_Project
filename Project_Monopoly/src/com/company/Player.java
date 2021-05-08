@@ -8,11 +8,16 @@ public class Player
     protected int position = 0;
     private boolean inJail = false;
     private boolean hasSet = false;
-    private boolean has4Houses = false;
+    private int housecount = 0;
+    private int hotelcount = 0;
     private int hasTrains = 0;
-    protected Player(String name)
+
+    protected Player()
     {
         this.player_budget = 1500;
+    }
+    public void setPlayer_name (String name)
+    {
         this.player_name = name;
     }
     protected void giveMoney(int money)
@@ -22,14 +27,6 @@ public class Player
     protected void takeMoney(int money)
     {
         this.player_budget -= money;
-    }
-    protected String getPlayerName ()
-    {
-        return this.player_name;
-    }
-    protected int getPlayer_budget()
-    {
-        return this.player_budget;
     }
     protected void goToJail ()
     {
@@ -44,6 +41,37 @@ public class Player
     {
         this.outOfJailCard = status;
     }
+
+    protected String getPlayerName ()
+    {
+        return this.player_name;
+    }
+    protected int getPlayer_budget()
+    {
+        return this.player_budget;
+    }
+    protected int getHasTrains() {
+        return hasTrains;
+    }
+
+    protected void setHotelcount(int number)
+    {
+        hotelcount += number;
+    }
+    protected int getHotelcount()
+    {
+        return hotelcount;
+    }
+
+    protected void setHousecount(int number)
+    {
+        housecount += number;
+    }
+    protected int getHousecount()
+    {
+        return housecount;
+    }
+
     protected boolean bankrupt()
     {
         if(this.player_budget == 0)
@@ -52,26 +80,12 @@ public class Player
         }
         return false;
     }
-
     protected boolean isInJail() {
         return inJail;
     }
-
     protected void isHasSet(boolean hasSet) {
         this.hasSet = hasSet;
     }
-    protected boolean getHasSet() {
-        return this.hasSet;
-    }
-    protected void setHas4Houses (boolean value)
-    {
-        this.has4Houses = value;
-    }
-
-    protected boolean getHas4Houses() {
-        return has4Houses;
-    }
-
     public boolean OutOfJailCard() {
         return outOfJailCard;
     }
@@ -79,7 +93,5 @@ public class Player
     {
         hasTrains += 1;
     }
-    protected int getHasTrains() {
-        return hasTrains;
-    }
+
 }
