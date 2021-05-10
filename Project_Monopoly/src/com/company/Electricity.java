@@ -1,6 +1,7 @@
 package com.company;
 
 public class Electricity extends Square {
+    ///Electricity type
     private String name;
     private int price;
     private int rentPrice;

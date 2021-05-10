@@ -2,6 +2,7 @@ package com.company;
 
 public class Square
 {
+    ///Parent class for all board types
     private String name;
     private int price;
     private Player owner;

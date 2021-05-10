@@ -1,6 +1,7 @@
 package com.company;
 
 public class Community_Chest extends GameBoard {
+    ///Chance cards
     private String text;
     private ActionType action;
     private int value;

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 public class Game extends GameBoard
 {
+    ///Game class with the functionallity of the game
     private static int chance_count = -1;
     private static int chest_count = -1;
     private Chance [] chance_cards = new Chance[16];

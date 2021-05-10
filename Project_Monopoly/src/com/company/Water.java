@@ -2,6 +2,7 @@ package com.company;
 
 public class Water extends Square
 {
+    ///Water type
     private String name;
     private int price;
     private int rentPrice;

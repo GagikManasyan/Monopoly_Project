@@ -2,6 +2,7 @@ package com.company;
 
 public class Player
 {
+    ///Player
     private String player_name;
     private boolean outOfJailCard = false;
     private int player_budget;
@@ -41,7 +42,6 @@ public class Player
     {
         this.outOfJailCard = status;
     }
-
     protected String getPlayerName ()
     {
         return this.player_name;
@@ -53,7 +53,6 @@ public class Player
     protected int getHasTrains() {
         return hasTrains;
     }
-
     protected void setHotelcount(int number)
     {
         hotelcount += number;
@@ -62,7 +61,6 @@ public class Player
     {
         return hotelcount;
     }
-
     protected void setHousecount(int number)
     {
         housecount += number;
@@ -70,15 +68,6 @@ public class Player
     protected int getHousecount()
     {
         return housecount;
-    }
-
-    protected boolean bankrupt()
-    {
-        if(this.player_budget == 0)
-        {
-            return true;
-        }
-        return false;
     }
     protected boolean isInJail() {
         return inJail;

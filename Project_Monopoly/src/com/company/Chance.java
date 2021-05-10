@@ -4,6 +4,7 @@ enum ActionType {
 }
 public class Chance extends GameBoard
 {
+    ///Chance cards
     private String text;
     private ActionType action;
     private int value;

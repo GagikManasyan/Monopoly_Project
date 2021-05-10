@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 public class GameWindow extends GameBoard implements ActionListener
 {
+    ///Game window
     private JFrame gamewindow;
     private JButton Throw;
     private JButton BuyHouse;

@@ -1,9 +1,9 @@
 package com.company;
 
-import javax.swing.*;
 
 public class Street extends Square
 {
+    ///Street type
     private String name;
     private int price;
     private int rent_price;

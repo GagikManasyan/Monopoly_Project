@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class LaunchWindow extends JFrame implements ActionListener
 {
+    ///The game starting window
     JButton Start;
     JButton Exit;
     private static int playercount;

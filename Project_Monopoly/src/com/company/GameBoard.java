@@ -2,6 +2,7 @@ package com.company;
 
 public abstract class GameBoard
 {
+    ///The game board
     protected Square [] game_board = new Square[40];
     protected GameBoard()
     {

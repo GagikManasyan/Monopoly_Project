@@ -2,6 +2,7 @@ package com.company;
 
 public class Train extends Square
 {
+    ///Train Type
     private String name;
     private int price;
     private int rentPrice;
