@@ -33,8 +33,15 @@ public class Chance extends GameBoard
         {
             if(player.position < value)
             {
-                player.position = value;
-                player.giveMoney(200);
+                if(value == 30)
+                {
+                    player.position = value;
+                }
+                else
+                {
+                    player.position = value;
+                    player.giveMoney(200);
+                }
             }
             else
             {
