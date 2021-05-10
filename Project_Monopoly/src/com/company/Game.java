@@ -9,7 +9,7 @@ public class Game extends GameBoard
     private static int chest_count = -1;
     private Chance [] chance_cards = new Chance[16];
     private Community_Chest [] chest_cards = new Community_Chest[16];
-    protected Game (Player player)
+    protected Game ()
     {
         chest_cards[0] = new Community_Chest("Advance to Go. (Collect $200)",ActionType.MoveToGo, 0 );
         chest_cards[1] = new Community_Chest("Bank error in your favor. Collect $200",ActionType.GiveMoney, 200);
@@ -45,8 +45,7 @@ public class Game extends GameBoard
         chance_cards[14] = new Chance("Pay $200", ActionType.TakeMoney, 200);
         chance_cards[15] = new Chance("Pay $100", ActionType.TakeMoney, 100);
 
-        ((Street) game_board[1]).Own(player, true);
-        ((Street) game_board[3]).Own(player, true);
+
 
     }
     protected int diceRoll()

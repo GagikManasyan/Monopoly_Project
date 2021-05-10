@@ -16,7 +16,7 @@ public class GameWindow extends GameBoard implements ActionListener
     private JLabel square;
     private Player [] players = LaunchWindow.getPlayers();
     private int turn = -1;
-    private Game game = new Game(players[0]);
+    private Game game = new Game();
     public GameWindow ()
     {
 
